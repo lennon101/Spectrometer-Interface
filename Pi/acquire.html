@@ -1,0 +1,58 @@
+<html>
+<p>
+	We are setting up a sequence of acquisitions with an integration time of 500ms, 10
+	scans to average and
+	no boxcar smoothing.
+</p>
+<p>
+	There will be 5 spectra with a 5 second interval between acquisitions. The spectra
+	will be saved into the directory /home/ocean on the SD card with one spectra per
+	file. Each file will begin with the prefix acquire
+	followed by the numeric position in the sequence.
+</p>
+<p>
+	We will retrieve the results at a later time using the "Manage Results" page on the
+	Raspberry Pi.
+</p>
+<p>
+	Implementation detail: we must use several of our scripts to do all of this. The
+	quick way of doing this
+	in a single web page is to use iframes. The scripts will run sequentially - we
+	don't care what order
+	they are executed in, only that they all complete before we start the sequence of
+	acquisitions with
+	the submit button below.
+</p>
+
+<div id="elementId" style="display:none">
+	<!-- your buttons, anchors or anything else you want to be hidden by default-->
+
+	<!-- set integration time of 500ms (time in -->
+	<iframe src='http://192.168.42.1/cgi-bin/setintegration.php?time=500000'></iframe>
+
+	<!-- set the number scans to 10 (this is how many willl be averaged) per sample-->
+	<iframe src='http://192.168.42.1/cgi-bin/setaverage.php?scans=10'></iframe>
+
+	<!-- the width of each scan is set to 0-->
+	<iframe src='http://192.168.42.1/cgi-bin/setboxcar.php?width=0'></iframe>
+
+	<!-- set the prefix name of each of the sample file names-->
+	<iframe src='http://192.168.42.1/cgi-bin/setprefix.php?prefix=acquire'></iframe>
+
+	<!-- set the number of samples (or spectra) to take -->
+	<iframe src='http://192.168.42.1/cgi-bin/setmaxacquisitions.php?acquisitions=5'></iframe>
+
+	<!-- set the location on the Pi to save the samples-->
+	<iframe src='http://192.168.42.1/cgi-bin/setsavelocation.php?location=/home/ocean'></iframe>
+
+	<iframe src='http://192.168.42.1/cgi-bin/setsavemode.php?savemode=multi'></iframe>
+
+	<!-- set the interval in ms between each sample -->
+	<iframe src='http://192.168.42.1/cgi-bin/setsequenceinterval.php?interval=5000'></iframe>
+</div>
+
+<form action='http://192.168.42.1/cgi-bin/startsequence.php'>
+	This form has a single push button to start the sequence of acquisitions.
+	<input type=submit value='Push to start'>
+</form>
+</html>
