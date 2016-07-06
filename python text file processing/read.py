@@ -12,14 +12,12 @@ wavelengths = [];
 for i in range(5):
 	info.append(array[i]); 
 
-for line in info:
-	print line;
-
 for i in range(6,len(array)-len(info)):
-	wavelengths.append(array[i]);
-
-for line in wavelengths:
-	print line;
+	line = array[i].split();
+	#cast to float
+	line[0] = float(line[0]);
+	line[1] = float(line[1]);
+	wavelengths.append(line);
 
 #get the info out of the info array
 sequenceNum = int(re.search(r'\d+', info[0]).group());
@@ -28,3 +26,5 @@ integrationTime = int(re.search(r'\d+', info[2]).group());
 numScansAveraged = int(re.search(r'\d+', info[3]).group());
 boxCarSmoothing = int(re.search(r'\d+', info[4]).group());
 
+def getArrayOfIntensities():
+	return wavelengths;
