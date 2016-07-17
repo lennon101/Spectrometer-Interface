@@ -22,6 +22,7 @@ def getFilesWithPrefix(prefix):
 		if (isCorrectPrefix >= 0):
 			filesWithPrefix.append(item);
 
+	print "The files to be processed are:"
 	for item in filesWithPrefix:
 		print item; 
 
