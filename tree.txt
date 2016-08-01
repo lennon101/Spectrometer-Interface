@@ -1,0 +1,1580 @@
+pi@raspberrypi ~/dev-kit/SeaBreeze $ tree
+.
+|-- _common.mk
+|-- common.mk
+|-- common.mk.bck
+|-- common.mk.bck2
+|-- doc
+|   |-- Doxyfile
+|   |-- Doxyfile-dev
+|   |-- Doxyfile-dev-ext.txt
+|   |-- Doxyfile-ext.txt
+|   |-- SeaBreeze-Manual-Core.pdf
+|   `-- SeaBreeze-UML.pdf
+|-- include
+|   |-- api
+|   |   |-- DeviceFactory.h
+|   |   |-- DllDecl.h
+|   |   |-- seabreezeapi
+|   |   |   |-- ContinuousStrobeFeatureAdapter.h
+|   |   |   |-- DeviceAdapter.h
+|   |   |   |-- EEPROMFeatureAdapter.h
+|   |   |   |-- FeatureAdapterInterface.h
+|   |   |   |-- FeatureAdapterTemplate.h
+|   |   |   |-- FeatureFamilies.h
+|   |   |   |-- IrradCalFeatureAdapter.h
+|   |   |   |-- LightSourceFeatureAdapter.h
+|   |   |   |-- NonlinearityCoeffsFeatureAdapter.h
+|   |   |   |-- ProtocolFamilies.h
+|   |   |   |-- SeaBreezeAPIConstants.h
+|   |   |   |-- SeaBreezeAPI.h
+|   |   |   |-- SerialNumberFeatureAdapter.h
+|   |   |   |-- ShutterFeatureAdapter.h
+|   |   |   |-- SpectrometerFeatureAdapter.h
+|   |   |   |-- StrayLightCoeffsFeatureAdapter.h
+|   |   |   |-- StrobeLampFeatureAdapter.h
+|   |   |   `-- ThermoElectricCoolerFeatureAdapter.h
+|   |   `-- SeaBreezeWrapper.h
+|   |-- common
+|   |   |-- buses
+|   |   |   |-- BusFamilies.h
+|   |   |   |-- BusFamily.h
+|   |   |   |-- Bus.h
+|   |   |   |-- DeviceLocationProberInterface.h
+|   |   |   |-- DeviceLocatorInterface.h
+|   |   |   |-- rs232
+|   |   |   |   |-- RS232DeviceLocator.h
+|   |   |   |   |-- RS232Interface.h
+|   |   |   |   `-- RS232TransferHelper.h
+|   |   |   |-- socket
+|   |   |   |-- TransferHelper.h
+|   |   |   `-- usb
+|   |   |       |-- USBDeviceLocator.h
+|   |   |       |-- USBInterface.h
+|   |   |       `-- USBTransferHelper.h
+|   |   |-- ByteVector.h
+|   |   |-- Data.h
+|   |   |-- devices
+|   |   |   `-- Device.h
+|   |   |-- DoubleVector.h
+|   |   |-- exceptions
+|   |   |   |-- BusConnectException.h
+|   |   |   |-- BusException.h
+|   |   |   |-- BusTransferException.h
+|   |   |   |-- FeatureControlException.h
+|   |   |   |-- FeatureException.h
+|   |   |   |-- FeatureProtocolNotFoundException.h
+|   |   |   |-- IllegalArgumentException.h
+|   |   |   |-- NumberFormatException.h
+|   |   |   |-- ProtocolBusMismatchException.h
+|   |   |   |-- ProtocolException.h
+|   |   |   `-- ProtocolFormatException.h
+|   |   |-- features
+|   |   |   |-- FeatureFamily.h
+|   |   |   `-- Feature.h
+|   |   |-- FloatVector.h
+|   |   |-- globals.h
+|   |   |-- Log.h
+|   |   |-- protocols
+|   |   |   |-- Exchange.h
+|   |   |   |-- ProtocolFamily.h
+|   |   |   |-- Protocol.h
+|   |   |   |-- ProtocolHelper.h
+|   |   |   |-- ProtocolHint.h
+|   |   |   |-- Transaction.h
+|   |   |   `-- Transfer.h
+|   |   |-- SeaBreeze.h
+|   |   |-- U32Vector.h
+|   |   |-- UnitDescriptor.h
+|   |   `-- UShortVector.h
+|   |-- native
+|   |   |-- rs232
+|   |   |   |-- NativeRS232.h
+|   |   |   |-- RS232.h
+|   |   |   `-- windows
+|   |   |       `-- NativeRS232Windows.h
+|   |   |-- system
+|   |   |   |-- NativeSystem.h
+|   |   |   `-- System.h
+|   |   `-- usb
+|   |       |-- NativeUSB.h
+|   |       |-- USBDiscovery.h
+|   |       |-- USB.h
+|   |       `-- winusb
+|   |           `-- WindowsGUID.h
+|   `-- vendors
+|       `-- OceanOptics
+|           |-- buses
+|           |   |-- rs232
+|           |   |   `-- OOIRS232Interface.h
+|           |   `-- usb
+|           |       |-- ApexUSB.h
+|           |       |-- HR2000PlusUSB.h
+|           |       |-- HR2000USB.h
+|           |       |-- HR4000USB.h
+|           |       |-- JazUSB.h
+|           |       |-- Maya2000ProUSB.h
+|           |       |-- Maya2000USB.h
+|           |       |-- NIRQuest256USB.h
+|           |       |-- NIRQuest512USB.h
+|           |       |-- OOIUSB4KSpectrumTransferHelper.h
+|           |       |-- OOIUSBControlTransferHelper.h
+|           |       |-- OOIUSBEndpointMaps.h
+|           |       |-- OOIUSBInterface.h
+|           |       |-- OOIUSBProductID.h
+|           |       |-- OOIUSBSpectrumTransferHelper.h
+|           |       |-- OOIUSBSTSTransferHelper.bck
+|           |       |-- OOIUSBSTSTransferHelper.h~
+|           |       |-- OOIUSBTrivialTransferHelper.h
+|           |       |-- OOIUSBVentanaTransferHelper.h
+|           |       |-- OOIUSBVentanaTransferHelper.h~
+|           |       |-- QE65000USB.h
+|           |       |-- QEProUSB.h
+|           |       |-- STSUSB.h
+|           |       |-- TorusUSB.h
+|           |       |-- USB2000PlusUSB.h
+|           |       |-- USB2000USB.h
+|           |       |-- USB4000USB.h
+|           |       `-- VentanaUSB.h
+|           |-- devices
+|           |   |-- Apex.h
+|           |   |-- HR2000.h
+|           |   |-- HR2000Plus.h
+|           |   |-- HR4000.h
+|           |   |-- Jaz.h
+|           |   |-- Maya2000.h
+|           |   |-- Maya2000Pro.h
+|           |   |-- NIRQuest256.h
+|           |   |-- NIRQuest512.h
+|           |   |-- QE65000.h
+|           |   |-- QEPro.h
+|           |   |-- STS.h
+|           |   |-- Torus.h
+|           |   |-- USB2000.h
+|           |   |-- USB2000Plus.h
+|           |   |-- USB4000.h
+|           |   `-- Ventana.h
+|           |-- features
+|           |   |-- continuous_strobe
+|           |   |   |-- ContinuousStrobeFeature_FPGA.h
+|           |   |   |-- ContinuousStrobeFeature.h
+|           |   |   `-- ContinuousStrobeFeatureInterface.h
+|           |   |-- eeprom_slots
+|           |   |   |-- Coefficients.h
+|           |   |   |-- Coefficients.h~
+|           |   |   |-- EEPROMSlotFeatureBase.h
+|           |   |   |-- EEPROMSlotFeature.h
+|           |   |   |-- EEPROMSlotFeatureInterface.h
+|           |   |   |-- NonlinearityEEPROMSlotFeature.h
+|           |   |   |-- SerialNumberEEPROMSlotFeature.h
+|           |   |   |-- StrayLightEEPROMSlotFeature.h
+|           |   |   |-- WavelengthEEPROMSlotFeature.h
+|           |   |   `-- WavelengthEEPROMSlotFeature_QE65000.h
+|           |   |-- fpga_register
+|           |   |   |-- FPGARegisterFeature.h
+|           |   |   `-- FPGARegisterFeatureInterface.h
+|           |   |-- irradcal
+|           |   |   |-- IrradCalFeature.h
+|           |   |   `-- IrradCalFeatureInterface.h
+|           |   |-- light_source
+|           |   |   |-- LightSourceFeatureBase.h
+|           |   |   |-- LightSourceFeatureImpl.h
+|           |   |   |-- LightSourceFeatureInterface.h
+|           |   |   |-- StrobeLampFeature.h
+|           |   |   |-- StrobeLampFeatureInterface.h
+|           |   |   `-- VentanaLightSourceFeature.h
+|           |   |-- nonlinearity
+|           |   |   |-- NonlinearityCoeffsFeature.h
+|           |   |   `-- NonlinearityCoeffsFeatureInterface.h
+|           |   |-- raw_bus_access
+|           |   |   |-- RawUSBBusAccessFeature.h
+|           |   |   `-- RawUSBBusAccessFeatureInterface.h
+|           |   |-- serial_number
+|           |   |   |-- SerialNumberFeature.h
+|           |   |   `-- SerialNumberFeatureInterface.h
+|           |   |-- shutter
+|           |   |   |-- ShutterFeature.h
+|           |   |   `-- ShutterFeatureInterface.h
+|           |   |-- spectrometer
+|           |   |   |-- ApexSpectrometerFeature.h
+|           |   |   |-- GainAdjustedSpectrometerFeature.h
+|           |   |   |-- HR2000PlusSpectrometerFeature.h
+|           |   |   |-- HR2000SpectrometerFeature.h
+|           |   |   |-- HR4000SpectrometerFeature.h
+|           |   |   |-- JazSpectrometerFeature.h
+|           |   |   |-- Maya2000ProSpectrometerFeature.h
+|           |   |   |-- Maya2000SpectrometerFeature.h
+|           |   |   |-- NIRQuest256SpectrometerFeature.h
+|           |   |   |-- NIRQuest512SpectrometerFeature.h
+|           |   |   |-- NIRQuestSpectrometerFeature.h
+|           |   |   |-- OOISpectrometerFeature.h
+|           |   |   |-- OOISpectrometerFeatureInterface.h
+|           |   |   |-- PixelBinningFactorFeature.h
+|           |   |   |-- PixelBinningFactorFeature.h~
+|           |   |   |-- PixelBinningFactorFeatureInterface.h
+|           |   |   |-- PixelBinningFactorFeatureInterface.h~
+|           |   |   |-- QE65000SpectrometerFeature.h
+|           |   |   |-- QEProSpectrometerFeature.h
+|           |   |   |-- SpectrometerTriggerMode.h
+|           |   |   |-- STSSpectrometerFeature.h
+|           |   |   |-- USB2000PlusSpectrometerFeature.h
+|           |   |   |-- USB2000SpectrometerFeature.h
+|           |   |   |-- USB4000SpectrometerFeature.h
+|           |   |   `-- VentanaSpectrometerFeature.h
+|           |   |-- stray_light
+|           |   |   |-- StrayLightCoeffsFeature.h
+|           |   |   `-- StrayLightCoeffsFeatureInterface.h
+|           |   |-- thermoelectric
+|           |   |   |-- QEProThermoElectricFeature.h
+|           |   |   |-- ThermoElectricFeatureBase.h
+|           |   |   |-- ThermoElectricFeatureInterface.h
+|           |   |   |-- ThermoElectricQEFeature.h
+|           |   |   `-- VentanaThermoElectricFeature.h
+|           |   `-- wavecal
+|           |       |-- WaveCalFeature.h
+|           |       `-- WaveCalFeatureInterface.h
+|           |-- protocols
+|           |   |-- interfaces
+|           |   |   |-- ContinuousStrobeProtocolInterface.h
+|           |   |   |-- EEPROMProtocolInterface.h
+|           |   |   |-- FPGARegisterProtocolInterface.h
+|           |   |   |-- IrradCalProtocolInterface.h
+|           |   |   |-- LightSourceProtocolInterface.h
+|           |   |   |-- NonlinearityCoeffsProtocolInterface.h
+|           |   |   |-- PixelBinningFactorProtocolInterface.h
+|           |   |   |-- PixelBinningFactorProtocolInterface.h~
+|           |   |   |-- SerialNumberProtocolInterface.h
+|           |   |   |-- ShutterProtocolInterface.h
+|           |   |   |-- SpectrometerProtocolInterface.h
+|           |   |   |-- StrayLightCoeffsProtocolInterface.h
+|           |   |   |-- StrobeLampProtocolInterface.h
+|           |   |   |-- ThermoElectricProtocolInterface.h
+|           |   |   `-- WaveCalProtocolInterface.h
+|           |   |-- obp
+|           |   |   |-- constants
+|           |   |   |   `-- OBPMessageTypes.h
+|           |   |   |-- exchanges
+|           |   |   |   |-- OBPCommand.h
+|           |   |   |   |-- OBPContinuousStrobeEnableExchange.h
+|           |   |   |   |-- OBPContinuousStrobePeriodExchange.h
+|           |   |   |   |-- OBPGetIrradCalExchange.h
+|           |   |   |   |-- OBPGetIrradCollectionAreaExchange.h
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.h
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.h~
+|           |   |   |   |-- OBPGetNonlinearityCoeffExchange.h
+|           |   |   |   |-- OBPGetNonlinearityCoeffsCountExchange.h
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.h
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.h~
+|           |   |   |   |-- OBPGetSerialNumberExchange.h
+|           |   |   |   |-- OBPGetStrayLightCoeffExchange.h
+|           |   |   |   |-- OBPGetStrayLightCoeffsCountExchange.h
+|           |   |   |   |-- OBPGetThermoElectricTemperatureExchange.h
+|           |   |   |   |-- OBPGetWaveCalExchange.h
+|           |   |   |   |-- OBPIntegrationTimeExchange.h
+|           |   |   |   |-- OBPLightSourceEnableCommand.h
+|           |   |   |   |-- OBPLightSourceEnabledQuery.h
+|           |   |   |   |-- OBPLightSourceIntensityCommand.h
+|           |   |   |   |-- OBPLightSourceIntensityQuery.h
+|           |   |   |   |-- OBPMessage.h
+|           |   |   |   |-- OBPQuery.h
+|           |   |   |   |-- OBPReadRawSpectrum32AndMetadataExchange.h
+|           |   |   |   |-- OBPReadRawSpectrumExchange.h
+|           |   |   |   |-- OBPReadSpectrum32AndMetadataExchange.h
+|           |   |   |   |-- OBPReadSpectrumExchange.h
+|           |   |   |   |-- OBPRequestBufferedSpectrum32AndMetadataExchange.h
+|           |   |   |   |-- OBPRequestSpectrumExchange.h
+|           |   |   |   |-- OBPSetIrradCalExchange.h
+|           |   |   |   |-- OBPSetIrradCollectionAreaExchange.h
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.h
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.h~
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.h
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.h~
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.h
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.h~
+|           |   |   |   |-- OBPSetThermoElectricEnableExchange.h
+|           |   |   |   |-- OBPSetThermoElectricSetpointExchange.h
+|           |   |   |   |-- OBPSetWaveCalExchange.h
+|           |   |   |   |-- OBPSetWaveCalExchange.h~
+|           |   |   |   |-- OBPShutterExchange.h
+|           |   |   |   |-- OBPTransaction.h
+|           |   |   |   `-- OBPTriggerModeExchange.h
+|           |   |   |-- hints
+|           |   |   |   |-- OBPControlHint.h
+|           |   |   |   `-- OBPSpectrumHint.h
+|           |   |   `-- impls
+|           |   |       |-- OBPContinuousStrobeProtocol.h
+|           |   |       |-- OBPIrradCalProtocol.h
+|           |   |       |-- OBPLightSourceProtocol.h
+|           |   |       |-- OBPLightSourceProtocol_Ventana.h
+|           |   |       |-- OBPNonlinearityCoeffsProtocol.h
+|           |   |       |-- OBPPixelBinningFactorProtocol.h
+|           |   |       |-- OBPPixelBinningFactorProtocol.h~
+|           |   |       |-- OBPSerialNumberProtocol.h
+|           |   |       |-- OBPShutterProtocol.h
+|           |   |       |-- OBPSpectrometerProtocol.h
+|           |   |       |-- OBPStrayLightCoeffsProtocol.h
+|           |   |       |-- OBPThermoElectricProtocol.h
+|           |   |       |-- OBPWaveCalProtocol.h
+|           |   |       `-- OceanBinaryProtocol.h
+|           |   `-- ooi
+|           |       |-- constants
+|           |       |   |-- FPGARegisterCodes.h
+|           |       |   |-- OpCodes.h
+|           |       |   `-- QETECConstants.h
+|           |       |-- exchanges
+|           |       |   |-- FPGARegisterReadExchange.h
+|           |       |   |-- FPGARegisterWriteExchange.h
+|           |       |   |-- FPGASpectrumExchange.h
+|           |       |   |-- HRFPGASpectrumExchange.h
+|           |       |   |-- IntegrationTimeExchange.h
+|           |       |   |-- JazSpectrumExchange.h
+|           |       |   |-- MayaProSpectrumExchange.h
+|           |       |   |-- NIRQuestSpectrumExchange.h
+|           |       |   |-- OOI2KSpectrumExchange.h
+|           |       |   |-- OOIIrradCalExchange.h
+|           |       |   |-- OOIReadIrradCalExchange.h
+|           |       |   |-- OOIWriteIrradCalExchange.h
+|           |       |   |-- QESpectrumExchange.h
+|           |       |   |-- ReadEEPROMSlotExchange.h
+|           |       |   |-- ReadSpectrumExchange.h
+|           |       |   |-- ReadTECQETemperatureExchange.h
+|           |       |   |-- ReadTECTemperatureExchange.h
+|           |       |   |-- RequestSpectrumExchange.h
+|           |       |   |-- StrobeEnableExchange.h
+|           |       |   |-- TECEnableExchange.h
+|           |       |   |-- TECQEEnableExchange.h
+|           |       |   |-- TriggerModeExchange.h
+|           |       |   |-- USBFPGASpectrumExchange.h
+|           |       |   |-- WriteEEPROMSlotExchange.h
+|           |       |   |-- WriteTECQESetPointExchange.h
+|           |       |   `-- WriteTECSetPointExchange.h
+|           |       |-- hints
+|           |       |   |-- ControlHint.h
+|           |       |   `-- SpectrumHint.h
+|           |       `-- impls
+|           |           |-- FPGARegisterProtocol.h
+|           |           |-- OOIEEPROMProtocol.h
+|           |           |-- OOIIrradCalProtocol.h
+|           |           |-- OOIProtocol.h
+|           |           |-- OOISpectrometerProtocol.h
+|           |           |-- OOIStrobeLampProtocol.h
+|           |           `-- OOITECProtocol.h
+|           `-- utils
+|               `-- Polynomial.h
+|-- lib
+|   |-- Apex.o
+|   |-- ApexSpectrometerFeature.o
+|   |-- ApexUSB.o
+|   |-- BusConnectException.o
+|   |-- BusException.o
+|   |-- BusFamilies.o
+|   |-- BusFamily.o
+|   |-- Bus.o
+|   |-- BusTransferException.o
+|   |-- ByteVector.o
+|   |-- ContinuousStrobeFeatureAdapter.o
+|   |-- ContinuousStrobeFeature_FPGA.o
+|   |-- ContinuousStrobeFeature.o
+|   |-- ContinuousStrobeProtocolInterface.o
+|   |-- ControlHint.o
+|   |-- Data.o
+|   |-- DeviceAdapter.o
+|   |-- DeviceFactory.o
+|   |-- DeviceLocationProberInterface.o
+|   |-- Device.o
+|   |-- DoubleVector.o
+|   |-- EEPROMFeatureAdapter.o
+|   |-- EEPROMProtocolInterface.o
+|   |-- EEPROMSlotFeatureBase.o
+|   |-- EEPROMSlotFeature.o
+|   |-- Exchange.o
+|   |-- FeatureControlException.o
+|   |-- FeatureException.o
+|   |-- FeatureFamilies.o
+|   |-- FeatureFamily.o
+|   |-- Feature.o
+|   |-- FeatureProtocolNotFoundException.o
+|   |-- FloatVector.o
+|   |-- FPGARegisterCodes.o
+|   |-- FPGARegisterFeature.o
+|   |-- FPGARegisterProtocolInterface.o
+|   |-- FPGARegisterProtocol.o
+|   |-- FPGARegisterReadExchange.o
+|   |-- FPGARegisterWriteExchange.o
+|   |-- FPGASpectrumExchange.o
+|   |-- GainAdjustedSpectrometerFeature.o
+|   |-- HR2000.o
+|   |-- HR2000Plus.o
+|   |-- HR2000PlusSpectrometerFeature.o
+|   |-- HR2000PlusUSB.o
+|   |-- HR2000SpectrometerFeature.o
+|   |-- HR2000USB.o
+|   |-- HR4000.o
+|   |-- HR4000SpectrometerFeature.o
+|   |-- HR4000USB.o
+|   |-- HRFPGASpectrumExchange.o
+|   |-- IllegalArgumentException.o
+|   |-- IntegrationTimeExchange.o
+|   |-- IrradCalFeatureAdapter.o
+|   |-- IrradCalFeature.o
+|   |-- IrradCalProtocolInterface.o
+|   |-- Jaz.o
+|   |-- JazSpectrometerFeature.o
+|   |-- JazSpectrumExchange.o
+|   |-- JazUSB.o
+|   |-- libseabreeze.so
+|   |-- LightSourceFeatureAdapter.o
+|   |-- LightSourceFeatureBase.o
+|   |-- LightSourceFeatureImpl.o
+|   |-- LightSourceProtocolInterface.o
+|   |-- Log.o
+|   |-- Maya2000.o
+|   |-- Maya2000Pro.o
+|   |-- Maya2000ProSpectrometerFeature.o
+|   |-- Maya2000ProUSB.o
+|   |-- Maya2000SpectrometerFeature.o
+|   |-- Maya2000USB.o
+|   |-- MayaProSpectrumExchange.o
+|   |-- NativeRS232POSIX.o
+|   |-- NativeSystemPOSIX.o
+|   |-- NativeUSBLinux.o
+|   |-- NIRQuest256.o
+|   |-- NIRQuest256SpectrometerFeature.o
+|   |-- NIRQuest256USB.o
+|   |-- NIRQuest512.o
+|   |-- NIRQuest512SpectrometerFeature.o
+|   |-- NIRQuest512USB.o
+|   |-- NIRQuestSpectrometerFeature.o
+|   |-- NIRQuestSpectrumExchange.o
+|   |-- NonlinearityCoeffsFeatureAdapter.o
+|   |-- NonlinearityCoeffsFeature.o
+|   |-- NonlinearityCoeffsProtocolInterface.o
+|   |-- NonlinearityEEPROMSlotFeature.o
+|   |-- NumberFormatException.o
+|   |-- OBPCommand.o
+|   |-- OBPContinuousStrobeEnableExchange.o
+|   |-- OBPContinuousStrobePeriodExchange.o
+|   |-- OBPContinuousStrobeProtocol.o
+|   |-- OBPControlHint.o
+|   |-- OBPGetIrradCalExchange.o
+|   |-- OBPGetIrradCollectionAreaExchange.o
+|   |-- OBPGetMaximumPixelBinningFactorExchange.o
+|   |-- OBPGetNonlinearityCoeffExchange.o
+|   |-- OBPGetNonlinearityCoeffsCountExchange.o
+|   |-- OBPGetPixelBinningFactorExchange.o
+|   |-- OBPGetSerialNumberExchange.o
+|   |-- OBPGetStrayLightCoeffExchange.o
+|   |-- OBPGetStrayLightCoeffsCountExchange.o
+|   |-- OBPGetThermoElectricTemperatureExchange.o
+|   |-- OBPGetWaveCalExchange.o
+|   |-- OBPIntegrationTimeExchange.o
+|   |-- OBPIrradCalProtocol.o
+|   |-- OBPLightSourceEnableCommand.o
+|   |-- OBPLightSourceEnabledQuery.o
+|   |-- OBPLightSourceIntensityCommand.o
+|   |-- OBPLightSourceIntensityQuery.o
+|   |-- OBPLightSourceProtocol.o
+|   |-- OBPLightSourceProtocol_Ventana.o
+|   |-- OBPMessage.o
+|   |-- OBPNonlinearityCoeffsProtocol.o
+|   |-- OBPPixelBinningFactorProtocol.o
+|   |-- OBPQuery.o
+|   |-- OBPReadRawSpectrum32AndMetadataExchange.o
+|   |-- OBPReadRawSpectrumExchange.o
+|   |-- OBPReadSpectrum32AndMetadataExchange.o
+|   |-- OBPReadSpectrumExchange.o
+|   |-- OBPRequestBufferedSpectrum32AndMetadata.o
+|   |-- OBPRequestSpectrumExchange.o
+|   |-- OBPSerialNumberProtocol.o
+|   |-- OBPSetIrradCalExchange.o
+|   |-- OBPSetIrradCollectionAreaExchange.o
+|   |-- OBPSetNonlinearityCoeffExchange.o
+|   |-- OBPSetPixelBinningFactorExchange.o
+|   |-- OBPSetStrayLightCoeffExchange.o
+|   |-- OBPSetThermoElectricEnableExchange.o
+|   |-- OBPSetThermoElectricSetpointExchange.o
+|   |-- OBPSetWaveCalExchange.o
+|   |-- OBPShutterExchange.o
+|   |-- OBPShutterProtocol.o
+|   |-- OBPSpectrometerProtocol.o
+|   |-- OBPSpectrumHint.o
+|   |-- OBPStrayLightCoeffsProtocol.o
+|   |-- OBPThermoElectricProtocol.o
+|   |-- OBPTransaction.o
+|   |-- OBPTriggerModeExchange.o
+|   |-- OBPWaveCalProtocol.o
+|   |-- OceanBinaryProtocol.o
+|   |-- OOI2KSpectrumExchange.o
+|   |-- OOIEEPROMProtocol.o
+|   |-- OOIIrradCalExchange.o
+|   |-- OOIIrradCalProtocol.o
+|   |-- OOIProtocol.o
+|   |-- OOIReadIrradCalExchange.o
+|   |-- OOIRS232Interface.o
+|   |-- OOISpectrometerFeature.o
+|   |-- OOISpectrometerProtocol.o
+|   |-- OOIStrobeLampProtocol.o
+|   |-- OOITECProtocol.o
+|   |-- OOIUSB4KSpectrumTransferHelper.o
+|   |-- OOIUSBControlTransferHelper.o
+|   |-- OOIUSBEndpointMaps.o
+|   |-- OOIUSBInterface.o
+|   |-- OOIUSBSpectrumTransferHelper.o
+|   |-- OOIUSBTrivialTransferHelper.o
+|   |-- OOIUSBVentanaTransferHelper.o
+|   |-- OOIWriteIrradCalExchange.o
+|   |-- OpCodes.o
+|   |-- PixelBinningFactorFeature.o
+|   |-- PixelBinningFactorProtocolInterface.o
+|   |-- ProtocolBusMismatchException.o
+|   |-- ProtocolException.o
+|   |-- ProtocolFamilies.o
+|   |-- ProtocolFamily.o
+|   |-- ProtocolFormatException.o
+|   |-- ProtocolHelper.o
+|   |-- ProtocolHint.o
+|   |-- Protocol.o
+|   |-- QE65000.o
+|   |-- QE65000SpectrometerFeature.o
+|   |-- QE65000USB.o
+|   |-- QEPro.o
+|   |-- QEProSpectrometerFeature.o
+|   |-- QEProThermoElectricFeature.o
+|   |-- QEProUSB.o
+|   |-- QESpectrumExchange.o
+|   |-- RawUSBBusAccessFeature.o
+|   |-- ReadEEPROMSlotExchange.o
+|   |-- ReadSpectrumExchange.o
+|   |-- ReadTECQETemperatureExchange.o
+|   |-- ReadTECTemperatureExchange.o
+|   |-- RequestSpectrumExchange.o
+|   |-- RS232DeviceLocator.o
+|   |-- RS232Interface.o
+|   |-- RS232.o
+|   |-- RS232TransferHelper.o
+|   |-- SeaBreezeAPI.o
+|   |-- SeaBreezeWrapper.o
+|   |-- SerialNumberEEPROMSlotFeature.o
+|   |-- SerialNumberFeatureAdapter.o
+|   |-- SerialNumberFeature.o
+|   |-- SerialNumberProtocolInterface.o
+|   |-- ShutterFeatureAdapter.o
+|   |-- ShutterFeature.o
+|   |-- ShutterProtocolInterface.o
+|   |-- SpectrometerFeatureAdapter.o
+|   |-- SpectrometerProtocolInterface.o
+|   |-- SpectrometerTriggerMode.o
+|   |-- SpectrumHint.o
+|   |-- StrayLightCoeffsFeatureAdapter.o
+|   |-- StrayLightCoeffsFeature.o
+|   |-- StrayLightCoeffsProtocolInterface.o
+|   |-- StrayLightEEPROMSlotFeature.o
+|   |-- StrobeEnableExchange.o
+|   |-- StrobeLampFeatureAdapter.o
+|   |-- StrobeLampFeature.o
+|   |-- StrobeLampProtocolInterface.o
+|   |-- STS.o
+|   |-- STSSpectrometerFeature.o
+|   |-- STSUSB.o
+|   |-- System.o
+|   |-- TECEnableExchange.o
+|   |-- TECQEEnableExchange.o
+|   |-- ThermoElectricCoolerFeatureAdapter.o
+|   |-- ThermoElectricFeatureBase.o
+|   |-- ThermoElectricProtocolInterface.o
+|   |-- ThermoElectricQEFeature.o
+|   |-- Torus.o
+|   |-- TorusUSB.o
+|   |-- Transaction.o
+|   |-- TransferHelper.o
+|   |-- Transfer.o
+|   |-- TriggerModeExchange.o
+|   |-- U32Vector.o
+|   |-- UnitDescriptor.o
+|   |-- USB2000.o
+|   |-- USB2000Plus.o
+|   |-- USB2000PlusSpectrometerFeature.o
+|   |-- USB2000PlusUSB.o
+|   |-- USB2000SpectrometerFeature.o
+|   |-- USB2000USB.o
+|   |-- USB4000.o
+|   |-- USB4000SpectrometerFeature.o
+|   |-- USB4000USB.o
+|   |-- USBDeviceLocator.o
+|   |-- USBDiscovery.o
+|   |-- USBFPGASpectrumExchange.o
+|   |-- USBInterface.o
+|   |-- USB.o
+|   |-- USBTransferHelper.o
+|   |-- UShortVector.o
+|   |-- VentanaLightSourceFeature.o
+|   |-- Ventana.o
+|   |-- VentanaSpectrometerFeature.o
+|   |-- VentanaThermoElectricFeature.o
+|   |-- VentanaUSB.o
+|   |-- WaveCalFeature.o
+|   |-- WaveCalProtocolInterface.o
+|   |-- WavelengthEEPROMSlotFeature.o
+|   |-- WavelengthEEPROMSlotFeature_QE65000.o
+|   |-- WriteEEPROMSlotExchange.o
+|   |-- WriteTECQESetPointExchange.o
+|   `-- WriteTECSetPointExchange.o
+|-- Makefile
+|-- os-support
+|   `-- linux
+|       `-- 10-oceanoptics.rules
+|-- README.txt
+|-- RELEASE_NOTES.txt
+|-- sample-code
+|   |-- c
+|   |   |-- demo-named-spectrometer.c
+|   |   |-- demo-raw-usb.c
+|   |   |-- demo-stability-scan.c
+|   |   |-- demo-streaming-xml.c
+|   |   |-- demo-strobe.c
+|   |   |-- demo-strobe-sts.c
+|   |   |-- demo-sts-api.c
+|   |   |-- demo-timeout.c
+|   |   |-- demo-timing.c
+|   |   |-- demo-unformatted-spectrum.c
+|   |   |-- Makefile
+|   |   |-- seabreeze-util.c
+|   |   |-- util.c
+|   |   `-- util.h
+|   |-- CSharpDemo
+|   |   |-- app.config
+|   |   |-- CSharpDemo.csproj
+|   |   |-- CSharpDemo.sln
+|   |   |-- Form1.cs
+|   |   |-- Form1.Designer.cs
+|   |   |-- Form1.resx
+|   |   |-- Logger.cs
+|   |   |-- OmniDriverSpectrometer.cs
+|   |   |-- Program.cs
+|   |   |-- Properties
+|   |   |   |-- AssemblyInfo.cs
+|   |   |   |-- Resources.Designer.cs
+|   |   |   |-- Resources.resx
+|   |   |   |-- Settings.Designer.cs
+|   |   |   `-- Settings.settings
+|   |   |-- README.TXT
+|   |   |-- SeaBreezeSpectrometer.cs
+|   |   |-- SeaBreezeWrapper.cs
+|   |   |-- Setup
+|   |   |   `-- Setup.vdproj
+|   |   `-- Spectrometer.cs
+|   |-- Makefile
+|   `-- VisualCppConsoleDemo
+|       |-- src
+|       |   |-- ReadMe.txt
+|       |   |-- stdafx.cpp
+|       |   |-- stdafx.h
+|       |   |-- targetver.h
+|       |   |-- VisualCppConsoleDemo.cpp
+|       |   |-- VisualCppConsoleDemo.vcxproj
+|       |   |-- VisualCppConsoleDemo.vcxproj.filters
+|       |   `-- VisualCppConsoleDemo.vcxproj.user
+|       `-- VisualCppConsoleDemo.sln
+|-- src
+|   |-- api
+|   |   |-- DeviceFactory.cpp
+|   |   |-- DeviceFactory.d
+|   |   |-- DeviceFactory.o
+|   |   |-- Makefile
+|   |   |-- seabreezeapi
+|   |   |   |-- ContinuousStrobeFeatureAdapter.cpp
+|   |   |   |-- ContinuousStrobeFeatureAdapter.d
+|   |   |   |-- ContinuousStrobeFeatureAdapter.o
+|   |   |   |-- DeviceAdapter.cpp
+|   |   |   |-- DeviceAdapter.d
+|   |   |   |-- DeviceAdapter.o
+|   |   |   |-- EEPROMFeatureAdapter.cpp
+|   |   |   |-- EEPROMFeatureAdapter.d
+|   |   |   |-- EEPROMFeatureAdapter.o
+|   |   |   |-- FeatureFamilies.cpp
+|   |   |   |-- FeatureFamilies.d
+|   |   |   |-- FeatureFamilies.o
+|   |   |   |-- IrradCalFeatureAdapter.cpp
+|   |   |   |-- IrradCalFeatureAdapter.d
+|   |   |   |-- IrradCalFeatureAdapter.o
+|   |   |   |-- LightSourceFeatureAdapter.cpp
+|   |   |   |-- LightSourceFeatureAdapter.d
+|   |   |   |-- LightSourceFeatureAdapter.o
+|   |   |   |-- Makefile
+|   |   |   |-- NonlinearityCoeffsFeatureAdapter.cpp
+|   |   |   |-- NonlinearityCoeffsFeatureAdapter.d
+|   |   |   |-- NonlinearityCoeffsFeatureAdapter.o
+|   |   |   |-- ProtocolFamilies.cpp
+|   |   |   |-- ProtocolFamilies.d
+|   |   |   |-- ProtocolFamilies.o
+|   |   |   |-- SeaBreezeAPI.cpp
+|   |   |   |-- SeaBreezeAPI.d
+|   |   |   |-- SeaBreezeAPI.o
+|   |   |   |-- SerialNumberFeatureAdapter.cpp
+|   |   |   |-- SerialNumberFeatureAdapter.d
+|   |   |   |-- SerialNumberFeatureAdapter.o
+|   |   |   |-- ShutterFeatureAdapter.cpp
+|   |   |   |-- ShutterFeatureAdapter.d
+|   |   |   |-- ShutterFeatureAdapter.o
+|   |   |   |-- SpectrometerFeatureAdapter.cpp
+|   |   |   |-- SpectrometerFeatureAdapter.d
+|   |   |   |-- SpectrometerFeatureAdapter.o
+|   |   |   |-- StrayLightCoeffsFeatureAdapter.cpp
+|   |   |   |-- StrayLightCoeffsFeatureAdapter.d
+|   |   |   |-- StrayLightCoeffsFeatureAdapter.o
+|   |   |   |-- StrobeLampFeatureAdapter.cpp
+|   |   |   |-- StrobeLampFeatureAdapter.d
+|   |   |   |-- StrobeLampFeatureAdapter.o
+|   |   |   |-- ThermoElectricCoolerFeatureAdapter.cpp
+|   |   |   |-- ThermoElectricCoolerFeatureAdapter.d
+|   |   |   `-- ThermoElectricCoolerFeatureAdapter.o
+|   |   |-- SeaBreezeWrapper.cpp
+|   |   |-- SeaBreezeWrapper.d
+|   |   `-- SeaBreezeWrapper.o
+|   |-- common
+|   |   |-- buses
+|   |   |   |-- Bus.cpp
+|   |   |   |-- Bus.d
+|   |   |   |-- BusFamilies.cpp
+|   |   |   |-- BusFamilies.d
+|   |   |   |-- BusFamilies.o
+|   |   |   |-- BusFamily.cpp
+|   |   |   |-- BusFamily.d
+|   |   |   |-- BusFamily.o
+|   |   |   |-- Bus.o
+|   |   |   |-- DeviceLocationProberInterface.cpp
+|   |   |   |-- DeviceLocationProberInterface.d
+|   |   |   |-- DeviceLocationProberInterface.o
+|   |   |   |-- Makefile
+|   |   |   |-- rs232
+|   |   |   |   |-- Makefile
+|   |   |   |   |-- RS232DeviceLocator.cpp
+|   |   |   |   |-- RS232DeviceLocator.d
+|   |   |   |   |-- RS232DeviceLocator.o
+|   |   |   |   |-- RS232Interface.cpp
+|   |   |   |   |-- RS232Interface.d
+|   |   |   |   |-- RS232Interface.o
+|   |   |   |   |-- RS232TransferHelper.cpp
+|   |   |   |   |-- RS232TransferHelper.d
+|   |   |   |   `-- RS232TransferHelper.o
+|   |   |   |-- socket
+|   |   |   |-- TransferHelper.cpp
+|   |   |   |-- TransferHelper.d
+|   |   |   |-- TransferHelper.o
+|   |   |   `-- usb
+|   |   |       |-- Makefile
+|   |   |       |-- USBDeviceLocator.cpp
+|   |   |       |-- USBDeviceLocator.d
+|   |   |       |-- USBDeviceLocator.o
+|   |   |       |-- USBInterface.cpp
+|   |   |       |-- USBInterface.d
+|   |   |       |-- USBInterface.o
+|   |   |       |-- USBTransferHelper.cpp
+|   |   |       |-- USBTransferHelper.d
+|   |   |       `-- USBTransferHelper.o
+|   |   |-- ByteVector.cpp
+|   |   |-- ByteVector.d
+|   |   |-- ByteVector.o
+|   |   |-- Data.cpp
+|   |   |-- Data.d
+|   |   |-- Data.o
+|   |   |-- devices
+|   |   |   |-- Device.cpp
+|   |   |   |-- Device.d
+|   |   |   |-- Device.o
+|   |   |   `-- Makefile
+|   |   |-- DoubleVector.cpp
+|   |   |-- DoubleVector.d
+|   |   |-- DoubleVector.o
+|   |   |-- exceptions
+|   |   |   |-- BusConnectException.cpp
+|   |   |   |-- BusConnectException.d
+|   |   |   |-- BusConnectException.o
+|   |   |   |-- BusException.cpp
+|   |   |   |-- BusException.d
+|   |   |   |-- BusException.o
+|   |   |   |-- BusTransferException.cpp
+|   |   |   |-- BusTransferException.d
+|   |   |   |-- BusTransferException.o
+|   |   |   |-- FeatureControlException.cpp
+|   |   |   |-- FeatureControlException.d
+|   |   |   |-- FeatureControlException.o
+|   |   |   |-- FeatureException.cpp
+|   |   |   |-- FeatureException.d
+|   |   |   |-- FeatureException.o
+|   |   |   |-- FeatureProtocolNotFoundException.cpp
+|   |   |   |-- FeatureProtocolNotFoundException.d
+|   |   |   |-- FeatureProtocolNotFoundException.o
+|   |   |   |-- IllegalArgumentException.cpp
+|   |   |   |-- IllegalArgumentException.d
+|   |   |   |-- IllegalArgumentException.o
+|   |   |   |-- Makefile
+|   |   |   |-- NumberFormatException.cpp
+|   |   |   |-- NumberFormatException.d
+|   |   |   |-- NumberFormatException.o
+|   |   |   |-- ProtocolBusMismatchException.cpp
+|   |   |   |-- ProtocolBusMismatchException.d
+|   |   |   |-- ProtocolBusMismatchException.o
+|   |   |   |-- ProtocolException.cpp
+|   |   |   |-- ProtocolException.d
+|   |   |   |-- ProtocolException.o
+|   |   |   |-- ProtocolFormatException.cpp
+|   |   |   |-- ProtocolFormatException.d
+|   |   |   `-- ProtocolFormatException.o
+|   |   |-- features
+|   |   |   |-- Feature.cpp
+|   |   |   |-- Feature.d
+|   |   |   |-- FeatureFamily.cpp
+|   |   |   |-- FeatureFamily.d
+|   |   |   |-- FeatureFamily.o
+|   |   |   |-- Feature.o
+|   |   |   `-- Makefile
+|   |   |-- FloatVector.cpp
+|   |   |-- FloatVector.d
+|   |   |-- FloatVector.o
+|   |   |-- Log.cpp
+|   |   |-- Log.d
+|   |   |-- Log.o
+|   |   |-- Makefile
+|   |   |-- protocols
+|   |   |   |-- Exchange.cpp
+|   |   |   |-- Exchange.d
+|   |   |   |-- Exchange.o
+|   |   |   |-- Makefile
+|   |   |   |-- Protocol.cpp
+|   |   |   |-- Protocol.d
+|   |   |   |-- ProtocolFamily.cpp
+|   |   |   |-- ProtocolFamily.d
+|   |   |   |-- ProtocolFamily.o
+|   |   |   |-- ProtocolHelper.cpp
+|   |   |   |-- ProtocolHelper.d
+|   |   |   |-- ProtocolHelper.o
+|   |   |   |-- ProtocolHint.cpp
+|   |   |   |-- ProtocolHint.d
+|   |   |   |-- ProtocolHint.o
+|   |   |   |-- Protocol.o
+|   |   |   |-- Transaction.cpp
+|   |   |   |-- Transaction.d
+|   |   |   |-- Transaction.o
+|   |   |   |-- Transfer.cpp
+|   |   |   |-- Transfer.d
+|   |   |   `-- Transfer.o
+|   |   |-- U32Vector.cpp
+|   |   |-- U32Vector.d
+|   |   |-- U32Vector.o
+|   |   |-- UnitDescriptor.cpp
+|   |   |-- UnitDescriptor.d
+|   |   |-- UnitDescriptor.o
+|   |   |-- UShortVector.cpp
+|   |   |-- UShortVector.d
+|   |   `-- UShortVector.o
+|   |-- Makefile
+|   |-- native
+|   |   |-- Makefile
+|   |   |-- rs232
+|   |   |   |-- Makefile
+|   |   |   |-- posix
+|   |   |   |   |-- Makefile
+|   |   |   |   |-- NativeRS232POSIX.c
+|   |   |   |   |-- NativeRS232POSIX.d
+|   |   |   |   `-- NativeRS232POSIX.o
+|   |   |   |-- RS232.cpp
+|   |   |   |-- RS232.d
+|   |   |   |-- RS232.o
+|   |   |   `-- windows
+|   |   |       |-- Makefile
+|   |   |       `-- NativeRS232Windows.c
+|   |   |-- system
+|   |   |   |-- Makefile
+|   |   |   |-- posix
+|   |   |   |   |-- Makefile
+|   |   |   |   |-- NativeSystemPOSIX.c
+|   |   |   |   |-- NativeSystemPOSIX.d
+|   |   |   |   `-- NativeSystemPOSIX.o
+|   |   |   |-- System.cpp
+|   |   |   |-- System.d
+|   |   |   |-- System.o
+|   |   |   `-- windows
+|   |   |       |-- Makefile
+|   |   |       `-- NativeSystemWindows.c
+|   |   `-- usb
+|   |       |-- linux
+|   |       |   |-- Makefile
+|   |       |   |-- NativeUSBLinux.c
+|   |       |   |-- NativeUSBLinux.d
+|   |       |   `-- NativeUSBLinux.o
+|   |       |-- Makefile
+|   |       |-- osx
+|   |       |   |-- Makefile
+|   |       |   `-- NativeUSBMacOSX.c
+|   |       |-- USB.cpp
+|   |       |-- USB.d
+|   |       |-- USBDiscovery.cpp
+|   |       |-- USBDiscovery.d
+|   |       |-- USBDiscovery.o
+|   |       |-- USB.o
+|   |       `-- winusb
+|   |           |-- Makefile
+|   |           `-- NativeUSBWinUSB.c
+|   `-- vendors
+|       |-- Makefile
+|       `-- OceanOptics
+|           |-- buses
+|           |   |-- Makefile
+|           |   |-- rs232
+|           |   |   |-- Makefile
+|           |   |   |-- OOIRS232Interface.cpp
+|           |   |   |-- OOIRS232Interface.d
+|           |   |   `-- OOIRS232Interface.o
+|           |   `-- usb
+|           |       |-- ApexUSB.cpp
+|           |       |-- ApexUSB.d
+|           |       |-- ApexUSB.o
+|           |       |-- HR2000PlusUSB.cpp
+|           |       |-- HR2000PlusUSB.d
+|           |       |-- HR2000PlusUSB.o
+|           |       |-- HR2000USB.cpp
+|           |       |-- HR2000USB.d
+|           |       |-- HR2000USB.o
+|           |       |-- HR4000USB.cpp
+|           |       |-- HR4000USB.d
+|           |       |-- HR4000USB.o
+|           |       |-- JazUSB.cpp
+|           |       |-- JazUSB.d
+|           |       |-- JazUSB.o
+|           |       |-- Makefile
+|           |       |-- Maya2000ProUSB.cpp
+|           |       |-- Maya2000ProUSB.d
+|           |       |-- Maya2000ProUSB.o
+|           |       |-- Maya2000USB.cpp
+|           |       |-- Maya2000USB.d
+|           |       |-- Maya2000USB.o
+|           |       |-- NIRQuest256USB.cpp
+|           |       |-- NIRQuest256USB.d
+|           |       |-- NIRQuest256USB.o
+|           |       |-- NIRQuest512USB.cpp
+|           |       |-- NIRQuest512USB.d
+|           |       |-- NIRQuest512USB.o
+|           |       |-- OOIUSB4KSpectrumTransferHelper.cpp
+|           |       |-- OOIUSB4KSpectrumTransferHelper.d
+|           |       |-- OOIUSB4KSpectrumTransferHelper.o
+|           |       |-- OOIUSBControlTransferHelper.cpp
+|           |       |-- OOIUSBControlTransferHelper.d
+|           |       |-- OOIUSBControlTransferHelper.o
+|           |       |-- OOIUSBEndpointMaps.cpp
+|           |       |-- OOIUSBEndpointMaps.d
+|           |       |-- OOIUSBEndpointMaps.o
+|           |       |-- OOIUSBInterface.cpp
+|           |       |-- OOIUSBInterface.d
+|           |       |-- OOIUSBInterface.o
+|           |       |-- OOIUSBSpectrumTransferHelper.cpp
+|           |       |-- OOIUSBSpectrumTransferHelper.d
+|           |       |-- OOIUSBSpectrumTransferHelper.o
+|           |       |-- OOIUSBSTSTransferHelper.bck
+|           |       |-- OOIUSBSTSTransferHelper.cpp~
+|           |       |-- OOIUSBTrivialTransferHelper.cpp
+|           |       |-- OOIUSBTrivialTransferHelper.d
+|           |       |-- OOIUSBTrivialTransferHelper.o
+|           |       |-- OOIUSBVentanaTransferHelper.cpp
+|           |       |-- OOIUSBVentanaTransferHelper.cpp~
+|           |       |-- OOIUSBVentanaTransferHelper.d
+|           |       |-- OOIUSBVentanaTransferHelper.o
+|           |       |-- QE65000USB.cpp
+|           |       |-- QE65000USB.d
+|           |       |-- QE65000USB.o
+|           |       |-- QEProUSB.cpp
+|           |       |-- QEProUSB.d
+|           |       |-- QEProUSB.o
+|           |       |-- STSUSB.cpp
+|           |       |-- STSUSB.d
+|           |       |-- STSUSB.o
+|           |       |-- TorusUSB.cpp
+|           |       |-- TorusUSB.d
+|           |       |-- TorusUSB.o
+|           |       |-- USB2000PlusUSB.cpp
+|           |       |-- USB2000PlusUSB.d
+|           |       |-- USB2000PlusUSB.o
+|           |       |-- USB2000USB.cpp
+|           |       |-- USB2000USB.d
+|           |       |-- USB2000USB.o
+|           |       |-- USB4000USB.cpp
+|           |       |-- USB4000USB.d
+|           |       |-- USB4000USB.o
+|           |       |-- VentanaUSB.cpp
+|           |       |-- VentanaUSB.d
+|           |       `-- VentanaUSB.o
+|           |-- devices
+|           |   |-- Apex.cpp
+|           |   |-- Apex.d
+|           |   |-- Apex.o
+|           |   |-- HR2000.cpp
+|           |   |-- HR2000.d
+|           |   |-- HR2000.o
+|           |   |-- HR2000Plus.cpp
+|           |   |-- HR2000Plus.d
+|           |   |-- HR2000Plus.o
+|           |   |-- HR4000.cpp
+|           |   |-- HR4000.d
+|           |   |-- HR4000.o
+|           |   |-- Jaz.cpp
+|           |   |-- Jaz.d
+|           |   |-- Jaz.o
+|           |   |-- Makefile
+|           |   |-- Maya2000.cpp
+|           |   |-- Maya2000.d
+|           |   |-- Maya2000.o
+|           |   |-- Maya2000Pro.cpp
+|           |   |-- Maya2000Pro.d
+|           |   |-- Maya2000Pro.o
+|           |   |-- NIRQuest256.cpp
+|           |   |-- NIRQuest256.d
+|           |   |-- NIRQuest256.o
+|           |   |-- NIRQuest512.cpp
+|           |   |-- NIRQuest512.d
+|           |   |-- NIRQuest512.o
+|           |   |-- QE65000.cpp
+|           |   |-- QE65000.d
+|           |   |-- QE65000.o
+|           |   |-- QEPro.cpp
+|           |   |-- QEPro.d
+|           |   |-- QEPro.o
+|           |   |-- STS.cpp
+|           |   |-- STS.d
+|           |   |-- STS.o
+|           |   |-- Torus.cpp
+|           |   |-- Torus.d
+|           |   |-- Torus.o
+|           |   |-- USB2000.cpp
+|           |   |-- USB2000.d
+|           |   |-- USB2000.o
+|           |   |-- USB2000Plus.cpp
+|           |   |-- USB2000Plus.d
+|           |   |-- USB2000Plus.o
+|           |   |-- USB4000.cpp
+|           |   |-- USB4000.d
+|           |   |-- USB4000.o
+|           |   |-- Ventana.cpp
+|           |   |-- Ventana.d
+|           |   `-- Ventana.o
+|           |-- features
+|           |   |-- continuous_strobe
+|           |   |   |-- ContinuousStrobeFeature.cpp
+|           |   |   |-- ContinuousStrobeFeature.d
+|           |   |   |-- ContinuousStrobeFeature_FPGA.cpp
+|           |   |   |-- ContinuousStrobeFeature_FPGA.d
+|           |   |   |-- ContinuousStrobeFeature_FPGA.o
+|           |   |   |-- ContinuousStrobeFeature.o
+|           |   |   `-- Makefile
+|           |   |-- eeprom_slots
+|           |   |   |-- EEPROMSlotFeatureBase.cpp
+|           |   |   |-- EEPROMSlotFeatureBase.d
+|           |   |   |-- EEPROMSlotFeatureBase.o
+|           |   |   |-- EEPROMSlotFeature.cpp
+|           |   |   |-- EEPROMSlotFeature.d
+|           |   |   |-- EEPROMSlotFeature.o
+|           |   |   |-- Makefile
+|           |   |   |-- NonlinearityEEPROMSlotFeature.cpp
+|           |   |   |-- NonlinearityEEPROMSlotFeature.d
+|           |   |   |-- NonlinearityEEPROMSlotFeature.o
+|           |   |   |-- SerialNumberEEPROMSlotFeature.cpp
+|           |   |   |-- SerialNumberEEPROMSlotFeature.d
+|           |   |   |-- SerialNumberEEPROMSlotFeature.o
+|           |   |   |-- StrayLightEEPROMSlotFeature.cpp
+|           |   |   |-- StrayLightEEPROMSlotFeature.d
+|           |   |   |-- StrayLightEEPROMSlotFeature.o
+|           |   |   |-- WavelengthEEPROMSlotFeature.cpp
+|           |   |   |-- WavelengthEEPROMSlotFeature.d
+|           |   |   |-- WavelengthEEPROMSlotFeature.o
+|           |   |   |-- WavelengthEEPROMSlotFeature_QE65000.cpp
+|           |   |   |-- WavelengthEEPROMSlotFeature_QE65000.d
+|           |   |   `-- WavelengthEEPROMSlotFeature_QE65000.o
+|           |   |-- fpga_register
+|           |   |   |-- FPGARegisterFeature.cpp
+|           |   |   |-- FPGARegisterFeature.d
+|           |   |   |-- FPGARegisterFeature.o
+|           |   |   `-- Makefile
+|           |   |-- irradcal
+|           |   |   |-- IrradCalFeature.cpp
+|           |   |   |-- IrradCalFeature.d
+|           |   |   |-- IrradCalFeature.o
+|           |   |   `-- Makefile
+|           |   |-- light_source
+|           |   |   |-- LightSourceFeatureBase.cpp
+|           |   |   |-- LightSourceFeatureBase.d
+|           |   |   |-- LightSourceFeatureBase.o
+|           |   |   |-- LightSourceFeatureImpl.cpp
+|           |   |   |-- LightSourceFeatureImpl.d
+|           |   |   |-- LightSourceFeatureImpl.o
+|           |   |   |-- Makefile
+|           |   |   |-- StrobeLampFeature.cpp
+|           |   |   |-- StrobeLampFeature.d
+|           |   |   |-- StrobeLampFeature.o
+|           |   |   |-- VentanaLightSourceFeature.cpp
+|           |   |   |-- VentanaLightSourceFeature.d
+|           |   |   `-- VentanaLightSourceFeature.o
+|           |   |-- Makefile
+|           |   |-- nonlinearity
+|           |   |   |-- Makefile
+|           |   |   |-- NonlinearityCoeffsFeature.cpp
+|           |   |   |-- NonlinearityCoeffsFeature.d
+|           |   |   `-- NonlinearityCoeffsFeature.o
+|           |   |-- raw_bus_access
+|           |   |   |-- Makefile
+|           |   |   |-- RawUSBBusAccessFeature.cpp
+|           |   |   |-- RawUSBBusAccessFeature.d
+|           |   |   `-- RawUSBBusAccessFeature.o
+|           |   |-- serial_number
+|           |   |   |-- Makefile
+|           |   |   |-- SerialNumberFeature.cpp
+|           |   |   |-- SerialNumberFeature.d
+|           |   |   `-- SerialNumberFeature.o
+|           |   |-- shutter
+|           |   |   |-- Makefile
+|           |   |   |-- ShutterFeature.cpp
+|           |   |   |-- ShutterFeature.d
+|           |   |   `-- ShutterFeature.o
+|           |   |-- spectrometer
+|           |   |   |-- ApexSpectrometerFeature.cpp
+|           |   |   |-- ApexSpectrometerFeature.d
+|           |   |   |-- ApexSpectrometerFeature.o
+|           |   |   |-- GainAdjustedSpectrometerFeature.cpp
+|           |   |   |-- GainAdjustedSpectrometerFeature.d
+|           |   |   |-- GainAdjustedSpectrometerFeature.o
+|           |   |   |-- HR2000PlusSpectrometerFeature.cpp
+|           |   |   |-- HR2000PlusSpectrometerFeature.d
+|           |   |   |-- HR2000PlusSpectrometerFeature.o
+|           |   |   |-- HR2000SpectrometerFeature.cpp
+|           |   |   |-- HR2000SpectrometerFeature.d
+|           |   |   |-- HR2000SpectrometerFeature.o
+|           |   |   |-- HR4000SpectrometerFeature.cpp
+|           |   |   |-- HR4000SpectrometerFeature.d
+|           |   |   |-- HR4000SpectrometerFeature.o
+|           |   |   |-- JazSpectrometerFeature.cpp
+|           |   |   |-- JazSpectrometerFeature.d
+|           |   |   |-- JazSpectrometerFeature.o
+|           |   |   |-- Makefile
+|           |   |   |-- Maya2000ProSpectrometerFeature.cpp
+|           |   |   |-- Maya2000ProSpectrometerFeature.d
+|           |   |   |-- Maya2000ProSpectrometerFeature.o
+|           |   |   |-- Maya2000SpectrometerFeature.cpp
+|           |   |   |-- Maya2000SpectrometerFeature.d
+|           |   |   |-- Maya2000SpectrometerFeature.o
+|           |   |   |-- NIRQuest256SpectrometerFeature.cpp
+|           |   |   |-- NIRQuest256SpectrometerFeature.d
+|           |   |   |-- NIRQuest256SpectrometerFeature.o
+|           |   |   |-- NIRQuest512SpectrometerFeature.cpp
+|           |   |   |-- NIRQuest512SpectrometerFeature.d
+|           |   |   |-- NIRQuest512SpectrometerFeature.o
+|           |   |   |-- NIRQuestSpectrometerFeature.cpp
+|           |   |   |-- NIRQuestSpectrometerFeature.d
+|           |   |   |-- NIRQuestSpectrometerFeature.o
+|           |   |   |-- OOISpectrometerFeature.cpp
+|           |   |   |-- OOISpectrometerFeature.d
+|           |   |   |-- OOISpectrometerFeature.o
+|           |   |   |-- PixelBinningFactorFeature.cpp
+|           |   |   |-- PixelBinningFactorFeature.cpp~
+|           |   |   |-- PixelBinningFactorFeature.d
+|           |   |   |-- PixelBinningFactorFeature.o
+|           |   |   |-- QE65000SpectrometerFeature.cpp
+|           |   |   |-- QE65000SpectrometerFeature.d
+|           |   |   |-- QE65000SpectrometerFeature.o
+|           |   |   |-- QEProSpectrometerFeature.cpp
+|           |   |   |-- QEProSpectrometerFeature.d
+|           |   |   |-- QEProSpectrometerFeature.o
+|           |   |   |-- SpectrometerTriggerMode.cpp
+|           |   |   |-- SpectrometerTriggerMode.d
+|           |   |   |-- SpectrometerTriggerMode.o
+|           |   |   |-- STSSpectrometerFeature.cpp
+|           |   |   |-- STSSpectrometerFeature.d
+|           |   |   |-- STSSpectrometerFeature.o
+|           |   |   |-- USB2000PlusSpectrometerFeature.cpp
+|           |   |   |-- USB2000PlusSpectrometerFeature.d
+|           |   |   |-- USB2000PlusSpectrometerFeature.o
+|           |   |   |-- USB2000SpectrometerFeature.cpp
+|           |   |   |-- USB2000SpectrometerFeature.d
+|           |   |   |-- USB2000SpectrometerFeature.o
+|           |   |   |-- USB4000SpectrometerFeature.cpp
+|           |   |   |-- USB4000SpectrometerFeature.d
+|           |   |   |-- USB4000SpectrometerFeature.o
+|           |   |   |-- VentanaSpectrometerFeature.cpp
+|           |   |   |-- VentanaSpectrometerFeature.d
+|           |   |   `-- VentanaSpectrometerFeature.o
+|           |   |-- stray_light
+|           |   |   |-- Makefile
+|           |   |   |-- StrayLightCoeffsFeature.cpp
+|           |   |   |-- StrayLightCoeffsFeature.d
+|           |   |   `-- StrayLightCoeffsFeature.o
+|           |   |-- thermoelectric
+|           |   |   |-- Makefile
+|           |   |   |-- QEProThermoElectricFeature.cpp
+|           |   |   |-- QEProThermoElectricFeature.d
+|           |   |   |-- QEProThermoElectricFeature.o
+|           |   |   |-- ThermoElectricFeatureBase.cpp
+|           |   |   |-- ThermoElectricFeatureBase.d
+|           |   |   |-- ThermoElectricFeatureBase.o
+|           |   |   |-- ThermoElectricQEFeature.cpp
+|           |   |   |-- ThermoElectricQEFeature.d
+|           |   |   |-- ThermoElectricQEFeature.o
+|           |   |   |-- VentanaThermoElectricFeature.cpp
+|           |   |   |-- VentanaThermoElectricFeature.d
+|           |   |   `-- VentanaThermoElectricFeature.o
+|           |   `-- wavecal
+|           |       |-- Makefile
+|           |       |-- WaveCalFeature.cpp
+|           |       |-- WaveCalFeature.d
+|           |       `-- WaveCalFeature.o
+|           |-- Makefile
+|           |-- protocols
+|           |   |-- interfaces
+|           |   |   |-- ContinuousStrobeProtocolInterface.cpp
+|           |   |   |-- ContinuousStrobeProtocolInterface.d
+|           |   |   |-- ContinuousStrobeProtocolInterface.o
+|           |   |   |-- EEPROMProtocolInterface.cpp
+|           |   |   |-- EEPROMProtocolInterface.d
+|           |   |   |-- EEPROMProtocolInterface.o
+|           |   |   |-- FPGARegisterProtocolInterface.cpp
+|           |   |   |-- FPGARegisterProtocolInterface.d
+|           |   |   |-- FPGARegisterProtocolInterface.o
+|           |   |   |-- IrradCalProtocolInterface.cpp
+|           |   |   |-- IrradCalProtocolInterface.d
+|           |   |   |-- IrradCalProtocolInterface.o
+|           |   |   |-- LightSourceProtocolInterface.cpp
+|           |   |   |-- LightSourceProtocolInterface.d
+|           |   |   |-- LightSourceProtocolInterface.o
+|           |   |   |-- Makefile
+|           |   |   |-- NonlinearityCoeffsProtocolInterface.cpp
+|           |   |   |-- NonlinearityCoeffsProtocolInterface.d
+|           |   |   |-- NonlinearityCoeffsProtocolInterface.o
+|           |   |   |-- PixelBinningFactorProtocolInterface.cpp
+|           |   |   |-- PixelBinningFactorProtocolInterface.cpp~
+|           |   |   |-- PixelBinningFactorProtocolInterface.d
+|           |   |   |-- PixelBinningFactorProtocolInterface.o
+|           |   |   |-- SerialNumberProtocolInterface.cpp
+|           |   |   |-- SerialNumberProtocolInterface.d
+|           |   |   |-- SerialNumberProtocolInterface.o
+|           |   |   |-- ShutterProtocolInterface.cpp
+|           |   |   |-- ShutterProtocolInterface.d
+|           |   |   |-- ShutterProtocolInterface.o
+|           |   |   |-- SpectrometerProtocolInterface.cpp
+|           |   |   |-- SpectrometerProtocolInterface.d
+|           |   |   |-- SpectrometerProtocolInterface.o
+|           |   |   |-- StrayLightCoeffsProtocolInterface.cpp
+|           |   |   |-- StrayLightCoeffsProtocolInterface.d
+|           |   |   |-- StrayLightCoeffsProtocolInterface.o
+|           |   |   |-- StrobeLampProtocolInterface.cpp
+|           |   |   |-- StrobeLampProtocolInterface.d
+|           |   |   |-- StrobeLampProtocolInterface.o
+|           |   |   |-- ThermoElectricProtocolInterface.cpp
+|           |   |   |-- ThermoElectricProtocolInterface.d
+|           |   |   |-- ThermoElectricProtocolInterface.o
+|           |   |   |-- WaveCalProtocolInterface.cpp
+|           |   |   |-- WaveCalProtocolInterface.d
+|           |   |   `-- WaveCalProtocolInterface.o
+|           |   |-- Makefile
+|           |   |-- obp
+|           |   |   |-- exchanges
+|           |   |   |   |-- Makefile
+|           |   |   |   |-- OBPCommand.cpp
+|           |   |   |   |-- OBPCommand.d
+|           |   |   |   |-- OBPCommand.o
+|           |   |   |   |-- OBPContinuousStrobeEnableExchange.cpp
+|           |   |   |   |-- OBPContinuousStrobeEnableExchange.d
+|           |   |   |   |-- OBPContinuousStrobeEnableExchange.o
+|           |   |   |   |-- OBPContinuousStrobePeriodExchange.cpp
+|           |   |   |   |-- OBPContinuousStrobePeriodExchange.d
+|           |   |   |   |-- OBPContinuousStrobePeriodExchange.o
+|           |   |   |   |-- OBPGetIrradCalExchange.cpp
+|           |   |   |   |-- OBPGetIrradCalExchange.d
+|           |   |   |   |-- OBPGetIrradCalExchange.o
+|           |   |   |   |-- OBPGetIrradCollectionAreaExchange.cpp
+|           |   |   |   |-- OBPGetIrradCollectionAreaExchange.d
+|           |   |   |   |-- OBPGetIrradCollectionAreaExchange.o
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.cpp
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.cpp~
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.d
+|           |   |   |   |-- OBPGetMaximumPixelBinningFactorExchange.o
+|           |   |   |   |-- OBPGetNonlinearityCoeffExchange.cpp
+|           |   |   |   |-- OBPGetNonlinearityCoeffExchange.d
+|           |   |   |   |-- OBPGetNonlinearityCoeffExchange.o
+|           |   |   |   |-- OBPGetNonlinearityCoeffsCountExchange.cpp
+|           |   |   |   |-- OBPGetNonlinearityCoeffsCountExchange.d
+|           |   |   |   |-- OBPGetNonlinearityCoeffsCountExchange.o
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.cpp
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.cpp~
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.d
+|           |   |   |   |-- OBPGetPixelBinningFactorExchange.o
+|           |   |   |   |-- OBPGetSerialNumberExchange.cpp
+|           |   |   |   |-- OBPGetSerialNumberExchange.d
+|           |   |   |   |-- OBPGetSerialNumberExchange.o
+|           |   |   |   |-- OBPGetStrayLightCoeffExchange.cpp
+|           |   |   |   |-- OBPGetStrayLightCoeffExchange.d
+|           |   |   |   |-- OBPGetStrayLightCoeffExchange.o
+|           |   |   |   |-- OBPGetStrayLightCoeffsCountExchange.cpp
+|           |   |   |   |-- OBPGetStrayLightCoeffsCountExchange.d
+|           |   |   |   |-- OBPGetStrayLightCoeffsCountExchange.o
+|           |   |   |   |-- OBPGetThermoElectricTemperatureExchange.cpp
+|           |   |   |   |-- OBPGetThermoElectricTemperatureExchange.d
+|           |   |   |   |-- OBPGetThermoElectricTemperatureExchange.o
+|           |   |   |   |-- OBPGetWaveCalExchange.cpp
+|           |   |   |   |-- OBPGetWaveCalExchange.d
+|           |   |   |   |-- OBPGetWaveCalExchange.o
+|           |   |   |   |-- OBPIntegrationTimeExchange.cpp
+|           |   |   |   |-- OBPIntegrationTimeExchange.d
+|           |   |   |   |-- OBPIntegrationTimeExchange.o
+|           |   |   |   |-- OBPLightSourceEnableCommand.cpp
+|           |   |   |   |-- OBPLightSourceEnableCommand.d
+|           |   |   |   |-- OBPLightSourceEnableCommand.o
+|           |   |   |   |-- OBPLightSourceEnabledQuery.cpp
+|           |   |   |   |-- OBPLightSourceEnabledQuery.d
+|           |   |   |   |-- OBPLightSourceEnabledQuery.o
+|           |   |   |   |-- OBPLightSourceIntensityCommand.cpp
+|           |   |   |   |-- OBPLightSourceIntensityCommand.d
+|           |   |   |   |-- OBPLightSourceIntensityCommand.o
+|           |   |   |   |-- OBPLightSourceIntensityQuery.cpp
+|           |   |   |   |-- OBPLightSourceIntensityQuery.d
+|           |   |   |   |-- OBPLightSourceIntensityQuery.o
+|           |   |   |   |-- OBPMessage.cpp
+|           |   |   |   |-- OBPMessage.d
+|           |   |   |   |-- OBPMessage.o
+|           |   |   |   |-- OBPQuery.cpp
+|           |   |   |   |-- OBPQuery.d
+|           |   |   |   |-- OBPQuery.o
+|           |   |   |   |-- OBPReadRawSpectrum32AndMetadataExchange.cpp
+|           |   |   |   |-- OBPReadRawSpectrum32AndMetadataExchange.d
+|           |   |   |   |-- OBPReadRawSpectrum32AndMetadataExchange.o
+|           |   |   |   |-- OBPReadRawSpectrumExchange.cpp
+|           |   |   |   |-- OBPReadRawSpectrumExchange.d
+|           |   |   |   |-- OBPReadRawSpectrumExchange.o
+|           |   |   |   |-- OBPReadSpectrum32AndMetadataExchange.cpp
+|           |   |   |   |-- OBPReadSpectrum32AndMetadataExchange.d
+|           |   |   |   |-- OBPReadSpectrum32AndMetadataExchange.o
+|           |   |   |   |-- OBPReadSpectrumExchange.cpp
+|           |   |   |   |-- OBPReadSpectrumExchange.d
+|           |   |   |   |-- OBPReadSpectrumExchange.o
+|           |   |   |   |-- OBPRequestBufferedSpectrum32AndMetadata.cpp
+|           |   |   |   |-- OBPRequestBufferedSpectrum32AndMetadata.d
+|           |   |   |   |-- OBPRequestBufferedSpectrum32AndMetadata.o
+|           |   |   |   |-- OBPRequestSpectrumExchange.cpp
+|           |   |   |   |-- OBPRequestSpectrumExchange.d
+|           |   |   |   |-- OBPRequestSpectrumExchange.o
+|           |   |   |   |-- OBPSetIrradCalExchange.cpp
+|           |   |   |   |-- OBPSetIrradCalExchange.d
+|           |   |   |   |-- OBPSetIrradCalExchange.o
+|           |   |   |   |-- OBPSetIrradCollectionAreaExchange.cpp
+|           |   |   |   |-- OBPSetIrradCollectionAreaExchange.d
+|           |   |   |   |-- OBPSetIrradCollectionAreaExchange.o
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.cpp
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.cpp~
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.d
+|           |   |   |   |-- OBPSetNonlinearityCoeffExchange.o
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.cpp
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.cpp~
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.d
+|           |   |   |   |-- OBPSetPixelBinningFactorExchange.o
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.cpp
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.cpp~
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.d
+|           |   |   |   |-- OBPSetStrayLightCoeffExchange.o
+|           |   |   |   |-- OBPSetThermoElectricEnableExchange.cpp
+|           |   |   |   |-- OBPSetThermoElectricEnableExchange.d
+|           |   |   |   |-- OBPSetThermoElectricEnableExchange.o
+|           |   |   |   |-- OBPSetThermoElectricSetpointExchange.cpp
+|           |   |   |   |-- OBPSetThermoElectricSetpointExchange.d
+|           |   |   |   |-- OBPSetThermoElectricSetpointExchange.o
+|           |   |   |   |-- OBPSetWaveCalExchange.cpp
+|           |   |   |   |-- OBPSetWaveCalExchange.cpp~
+|           |   |   |   |-- OBPSetWaveCalExchange.d
+|           |   |   |   |-- OBPSetWaveCalExchange.o
+|           |   |   |   |-- OBPShutterExchange.cpp
+|           |   |   |   |-- OBPShutterExchange.d
+|           |   |   |   |-- OBPShutterExchange.o
+|           |   |   |   |-- OBPTransaction.cpp
+|           |   |   |   |-- OBPTransaction.d
+|           |   |   |   |-- OBPTransaction.o
+|           |   |   |   |-- OBPTriggerModeExchange.cpp
+|           |   |   |   |-- OBPTriggerModeExchange.d
+|           |   |   |   `-- OBPTriggerModeExchange.o
+|           |   |   |-- hints
+|           |   |   |   |-- Makefile
+|           |   |   |   |-- OBPControlHint.cpp
+|           |   |   |   |-- OBPControlHint.d
+|           |   |   |   |-- OBPControlHint.o
+|           |   |   |   |-- OBPSpectrumHint.cpp
+|           |   |   |   |-- OBPSpectrumHint.d
+|           |   |   |   `-- OBPSpectrumHint.o
+|           |   |   |-- impls
+|           |   |   |   |-- Makefile
+|           |   |   |   |-- OBPContinuousStrobeProtocol.cpp
+|           |   |   |   |-- OBPContinuousStrobeProtocol.d
+|           |   |   |   |-- OBPContinuousStrobeProtocol.o
+|           |   |   |   |-- OBPIrradCalProtocol.cpp
+|           |   |   |   |-- OBPIrradCalProtocol.d
+|           |   |   |   |-- OBPIrradCalProtocol.o
+|           |   |   |   |-- OBPLightSourceProtocol.cpp
+|           |   |   |   |-- OBPLightSourceProtocol.d
+|           |   |   |   |-- OBPLightSourceProtocol.o
+|           |   |   |   |-- OBPLightSourceProtocol_Ventana.cpp
+|           |   |   |   |-- OBPLightSourceProtocol_Ventana.d
+|           |   |   |   |-- OBPLightSourceProtocol_Ventana.o
+|           |   |   |   |-- OBPNonlinearityCoeffsProtocol.cpp
+|           |   |   |   |-- OBPNonlinearityCoeffsProtocol.d
+|           |   |   |   |-- OBPNonlinearityCoeffsProtocol.o
+|           |   |   |   |-- OBPPixelBinningFactorProtocol.cpp
+|           |   |   |   |-- OBPPixelBinningFactorProtocol.cpp~
+|           |   |   |   |-- OBPPixelBinningFactorProtocol.d
+|           |   |   |   |-- OBPPixelBinningFactorProtocol.o
+|           |   |   |   |-- OBPSerialNumberProtocol.cpp
+|           |   |   |   |-- OBPSerialNumberProtocol.d
+|           |   |   |   |-- OBPSerialNumberProtocol.o
+|           |   |   |   |-- OBPShutterProtocol.cpp
+|           |   |   |   |-- OBPShutterProtocol.d
+|           |   |   |   |-- OBPShutterProtocol.o
+|           |   |   |   |-- OBPSpectrometerProtocol.cpp
+|           |   |   |   |-- OBPSpectrometerProtocol.d
+|           |   |   |   |-- OBPSpectrometerProtocol.o
+|           |   |   |   |-- OBPStrayLightCoeffsProtocol.cpp
+|           |   |   |   |-- OBPStrayLightCoeffsProtocol.d
+|           |   |   |   |-- OBPStrayLightCoeffsProtocol.o
+|           |   |   |   |-- OBPThermoElectricProtocol.cpp
+|           |   |   |   |-- OBPThermoElectricProtocol.d
+|           |   |   |   |-- OBPThermoElectricProtocol.o
+|           |   |   |   |-- OBPWaveCalProtocol.cpp
+|           |   |   |   |-- OBPWaveCalProtocol.d
+|           |   |   |   |-- OBPWaveCalProtocol.o
+|           |   |   |   |-- OceanBinaryProtocol.cpp
+|           |   |   |   |-- OceanBinaryProtocol.d
+|           |   |   |   `-- OceanBinaryProtocol.o
+|           |   |   `-- Makefile
+|           |   `-- ooi
+|           |       |-- constants
+|           |       |   |-- FPGARegisterCodes.cpp
+|           |       |   |-- FPGARegisterCodes.d
+|           |       |   |-- FPGARegisterCodes.o
+|           |       |   |-- Makefile
+|           |       |   |-- OpCodes.cpp
+|           |       |   |-- OpCodes.d
+|           |       |   `-- OpCodes.o
+|           |       |-- exchanges
+|           |       |   |-- FPGARegisterReadExchange.cpp
+|           |       |   |-- FPGARegisterReadExchange.d
+|           |       |   |-- FPGARegisterReadExchange.o
+|           |       |   |-- FPGARegisterWriteExchange.cpp
+|           |       |   |-- FPGARegisterWriteExchange.d
+|           |       |   |-- FPGARegisterWriteExchange.o
+|           |       |   |-- FPGASpectrumExchange.cpp
+|           |       |   |-- FPGASpectrumExchange.d
+|           |       |   |-- FPGASpectrumExchange.o
+|           |       |   |-- HRFPGASpectrumExchange.cpp
+|           |       |   |-- HRFPGASpectrumExchange.d
+|           |       |   |-- HRFPGASpectrumExchange.o
+|           |       |   |-- IntegrationTimeExchange.cpp
+|           |       |   |-- IntegrationTimeExchange.d
+|           |       |   |-- IntegrationTimeExchange.o
+|           |       |   |-- JazSpectrumExchange.cpp
+|           |       |   |-- JazSpectrumExchange.d
+|           |       |   |-- JazSpectrumExchange.o
+|           |       |   |-- Makefile
+|           |       |   |-- MayaProSpectrumExchange.cpp
+|           |       |   |-- MayaProSpectrumExchange.d
+|           |       |   |-- MayaProSpectrumExchange.o
+|           |       |   |-- NIRQuestSpectrumExchange.cpp
+|           |       |   |-- NIRQuestSpectrumExchange.d
+|           |       |   |-- NIRQuestSpectrumExchange.o
+|           |       |   |-- OOI2KSpectrumExchange.cpp
+|           |       |   |-- OOI2KSpectrumExchange.d
+|           |       |   |-- OOI2KSpectrumExchange.o
+|           |       |   |-- OOIIrradCalExchange.cpp
+|           |       |   |-- OOIIrradCalExchange.d
+|           |       |   |-- OOIIrradCalExchange.o
+|           |       |   |-- OOIReadIrradCalExchange.cpp
+|           |       |   |-- OOIReadIrradCalExchange.d
+|           |       |   |-- OOIReadIrradCalExchange.o
+|           |       |   |-- OOIWriteIrradCalExchange.cpp
+|           |       |   |-- OOIWriteIrradCalExchange.d
+|           |       |   |-- OOIWriteIrradCalExchange.o
+|           |       |   |-- QESpectrumExchange.cpp
+|           |       |   |-- QESpectrumExchange.d
+|           |       |   |-- QESpectrumExchange.o
+|           |       |   |-- ReadEEPROMSlotExchange.cpp
+|           |       |   |-- ReadEEPROMSlotExchange.d
+|           |       |   |-- ReadEEPROMSlotExchange.o
+|           |       |   |-- ReadSpectrumExchange.cpp
+|           |       |   |-- ReadSpectrumExchange.d
+|           |       |   |-- ReadSpectrumExchange.o
+|           |       |   |-- ReadTECQETemperatureExchange.cpp
+|           |       |   |-- ReadTECQETemperatureExchange.d
+|           |       |   |-- ReadTECQETemperatureExchange.o
+|           |       |   |-- ReadTECTemperatureExchange.cpp
+|           |       |   |-- ReadTECTemperatureExchange.d
+|           |       |   |-- ReadTECTemperatureExchange.o
+|           |       |   |-- RequestSpectrumExchange.cpp
+|           |       |   |-- RequestSpectrumExchange.d
+|           |       |   |-- RequestSpectrumExchange.o
+|           |       |   |-- StrobeEnableExchange.cpp
+|           |       |   |-- StrobeEnableExchange.d
+|           |       |   |-- StrobeEnableExchange.o
+|           |       |   |-- TECEnableExchange.cpp
+|           |       |   |-- TECEnableExchange.d
+|           |       |   |-- TECEnableExchange.o
+|           |       |   |-- TECQEEnableExchange.cpp
+|           |       |   |-- TECQEEnableExchange.d
+|           |       |   |-- TECQEEnableExchange.o
+|           |       |   |-- TriggerModeExchange.cpp
+|           |       |   |-- TriggerModeExchange.d
+|           |       |   |-- TriggerModeExchange.o
+|           |       |   |-- USBFPGASpectrumExchange.cpp
+|           |       |   |-- USBFPGASpectrumExchange.d
+|           |       |   |-- USBFPGASpectrumExchange.o
+|           |       |   |-- WriteEEPROMSlotExchange.cpp
+|           |       |   |-- WriteEEPROMSlotExchange.d
+|           |       |   |-- WriteEEPROMSlotExchange.o
+|           |       |   |-- WriteTECQESetPointExchange.cpp
+|           |       |   |-- WriteTECQESetPointExchange.d
+|           |       |   |-- WriteTECQESetPointExchange.o
+|           |       |   |-- WriteTECSetPointExchange.cpp
+|           |       |   |-- WriteTECSetPointExchange.d
+|           |       |   `-- WriteTECSetPointExchange.o
+|           |       |-- hints
+|           |       |   |-- ControlHint.cpp
+|           |       |   |-- ControlHint.d
+|           |       |   |-- ControlHint.o
+|           |       |   |-- Makefile
+|           |       |   |-- SpectrumHint.cpp
+|           |       |   |-- SpectrumHint.d
+|           |       |   `-- SpectrumHint.o
+|           |       |-- impls
+|           |       |   |-- FPGARegisterProtocol.cpp
+|           |       |   |-- FPGARegisterProtocol.d
+|           |       |   |-- FPGARegisterProtocol.o
+|           |       |   |-- Makefile
+|           |       |   |-- OOIEEPROMProtocol.cpp
+|           |       |   |-- OOIEEPROMProtocol.d
+|           |       |   |-- OOIEEPROMProtocol.o
+|           |       |   |-- OOIIrradCalProtocol.cpp
+|           |       |   |-- OOIIrradCalProtocol.d
+|           |       |   |-- OOIIrradCalProtocol.o
+|           |       |   |-- OOIProtocol.cpp
+|           |       |   |-- OOIProtocol.d
+|           |       |   |-- OOIProtocol.o
+|           |       |   |-- OOISpectrometerProtocol.cpp
+|           |       |   |-- OOISpectrometerProtocol.d
+|           |       |   |-- OOISpectrometerProtocol.o
+|           |       |   |-- OOIStrobeLampProtocol.cpp
+|           |       |   |-- OOIStrobeLampProtocol.d
+|           |       |   |-- OOIStrobeLampProtocol.o
+|           |       |   |-- OOITECProtocol.cpp
+|           |       |   |-- OOITECProtocol.d
+|           |       |   `-- OOITECProtocol.o
+|           |       `-- Makefile
+|           `-- utils
+|-- test
+|   |-- api_test.c
+|   |-- build
+|   |-- Makefile
+|   |-- seabreeze_test_posix.c
+|   |-- seabreeze_test_windows.c
+|   `-- spectral_correction.c
+`-- win.mk
+
+119 directories, 1456 files
+pi@raspberrypi ~/dev-kit/SeaBreeze $ 
