@@ -13,6 +13,8 @@ Creating a mavlink message listener - http://python.dronekit.io/guide/mavlink_me
 
 from dronekit import connect
 from time import sleep 
+from math import trunc
+import time 
 
 import sys
 
@@ -21,12 +23,25 @@ target = sys.argv[1] if len(sys.argv) >= 2 else 'udpin:0.0.0.0:14550'
 print 'Connecting to ' + target + '...'
 vehicle = connect(target, wait_ready=True)
 
+epochTime = 0
+
+#set up a mavlink listener for the system time clcok (taken from GPS)
+@vehicle.on_message('SYSTEM_TIME')
+def listener(self, name, message):
+	#truncate time to convert from usec to seconds
+	global epochTime 
+	epochTime = trunc(message.time_unix_usec/1000000)
+	#print "systime DTG: " , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
+
 
 #Create a message listener for all messages
 #register a callback for all messages by setting the message name as the wildcard string ('*')
 @vehicle.on_message('*')
 def listener(self, name, message):
-	print 'mavlink msg: %s' % message
+	if (vehicle.armed == True):
+		print '@ DTG: ' , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
+		print 'mavlink msg: %s \n\n--------\n' % message
+
 
 #sleep the system periodically otherwise system crashes with: 
 '''Exception in thread Thread-2 (most likely raised during interpreter shutdown):
@@ -37,5 +52,8 @@ Traceback (most recent call last):
 <type 'exceptions.AttributeError'>: 'NoneType' object has no attribute 'error'
 '''
 #it is assumed this is caused by the flood of mavlink msgs that can occur
+
+print 'waiting for vehicle to arm...'
 while True:
 	sleep(1);
+

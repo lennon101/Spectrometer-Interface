@@ -27,25 +27,20 @@ print 'Connecting to ' + target + '...'
 vehicle = connect(target, wait_ready=True)
 
 
-#Create a message listener for all messages
-#register a callback for all messages by setting the message name as the wildcard string ('*')
-@vehicle.on_message('*')
-def listener(self, name, message):
-	print 'mavlink msg: %s' % message
-
-
 #set up a mavlink listener for the system time clcok (taken from GPS)
 @vehicle.on_message('SYSTEM_TIME')
 def listener(self, name, message):
-	#truncate time to convert from usec to seconds
-	epochTime = trunc(message.time_unix_usec/1000000)
-	print "DTG: " , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
+	if (vehicle.armed == True):
+		#truncate time to convert from usec to seconds
+		epochTime = trunc(message.time_unix_usec/1000000)
+		print "DTG: " , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
 
 #set up a mavlink listener for the Camera Trigger
-@vehicle.on_message('CAMERA_TRIGGER')
+@vehicle.on_message('CAMERA_FEEDBACK')
 def listener(self, name, message):
-	print "cam triggered @: %s \n" % message.time_usec #time stamp
-	print "cam sequence num = %s \n" % message.seq #sequence number
+	print 'mavlink msg: %s' % message
+	#print "cam triggered @: %s \n" % message.time_usec #time stamp
+	#print "cam sequence num = %s \n" % message.cam_idx #sequence number
 
 #set up Callback to print 'vehicle is now armed' once vehicle has been armed
 #This will only print once 
@@ -56,6 +51,7 @@ def isArmed_callback(self, attr_name, value):
 vehicle.add_attribute_listener('armed', isArmed_callback)
 
 while True:
+	'''
 	# Get all vehicle attributes (state)
 	globalLoc = " Global Location: %s \n" % vehicle.location.global_frame
 	heading =  " Heading: %s \n" % vehicle.heading
@@ -74,6 +70,7 @@ while True:
 	msg = "Vehicle state: \n" + globalLoc + heading + globalLocRel + localLoc + alt + vel + gndSpeed + airSpeed + bat + heartBeat + mode + armable + armed
 
 	print msg
+	'''
 	print("------------------------------------")
 
 	sleep(PRINT_INTERVAL);
