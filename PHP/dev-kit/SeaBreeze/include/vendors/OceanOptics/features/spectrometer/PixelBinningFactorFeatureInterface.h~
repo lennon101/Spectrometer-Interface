@@ -1,0 +1,37 @@
+/***************************************************//**
+ * @file    PixelBinningFactorFeatureInterface.h
+ * @date    February 2011
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef PixelBinningFactorFeatureInterface_H
+#define PixelBinningFactorFeatureInterface_H
+
+#include "common/protocols/Protocol.h"
+#include "common/buses/Bus.h"
+#include "common/exceptions/FeatureException.h"
+
+namespace seabreeze {
+
+    class PixelBinningFactorFeatureInterface {
+    public:
+        virtual ~PixelBinningFactorFeatureInterface() = 0;
+        virtual int readPixelBinningFactor(const Protocol &protocol,
+                const Bus &bus) throw (FeatureException) = 0;
+        virtual void writePixelBinningFactor(const Protocol &protocol,
+                const Bus &bus, const int p) throw (FeatureException) = 0;
+        virtual int readMaximumPixelBinningfactor(const Protocol &protocol,
+                const Bus &bus) throw (FeatureException) = 0;
+    };
+
+    /* Default implementation for (otherwise) pure virtual destructor */
+    inline PixelBinningFactorFeatureInterface::~PixelBinningFactorFeatureInterface() {}
+}
+
+#endif /* PixelBinningFactorFeatureInterface_H */

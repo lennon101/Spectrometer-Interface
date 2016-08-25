@@ -1,0 +1,41 @@
+/***************************************************//**
+ * @file    OBPPixelBinningFactorProtocol.h
+ * @date    January 2011
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef OBPPixelBinningFactorProtocol_H
+#define OBPPixelBinningFactorProtocol_H
+
+#include "common/SeaBreeze.h"
+#include "common/buses/Bus.h"
+#include "vendors/OceanOptics/protocols/interfaces/PixelBinningFactorProtocolInterface.h"
+#include <vector>
+
+namespace seabreeze {
+  namespace oceanBinaryProtocol {
+    class OBPPixelBinningFactorProtocol : public PixelBinningFactorProtocolInterface {
+    public:
+        OBPPixelBinningFactorProtocol();
+        virtual ~OBPPixelBinningFactorProtocol();
+
+        virtual int readPixelBinningFactor(const Bus &bus)
+                throw (ProtocolException);
+
+        virtual void writePixelBinningFactor(const Bus &bus, const int p)
+            throw (ProtocolException);
+
+        virtual int readMaximumPixelBinningfactor(const Bus &bus)
+            throw (ProtocolException);
+    };
+  } /* end namespace */
+} /* end namespace */
+
+#endif /* OBPPixelBinningFactorProtocol_H */
+

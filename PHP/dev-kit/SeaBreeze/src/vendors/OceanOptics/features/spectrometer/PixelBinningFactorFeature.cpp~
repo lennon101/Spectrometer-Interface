@@ -1,0 +1,131 @@
+/***************************************************//**
+ * @file    PixelBinningFactorFeature.cpp
+ * @date    February 2011
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/features/spectrometer/PixelBinningFactorFeature.h"
+#include "vendors/OceanOptics/protocols/interfaces/PixelBinningFactorProtocolInterface.h"
+#include "vendors/OceanOptics/protocols/obp/impls/OBPPixelBinningFactorProtocol.h"
+#include "vendors/OceanOptics/utils/Polynomial.h"
+#include "common/exceptions/FeatureProtocolNotFoundException.h"
+#include "common/exceptions/FeatureControlException.h"
+#include "api/seabreezeapi/FeatureFamilies.h"
+
+using namespace seabreeze;
+using namespace seabreeze::oceanBinaryProtocol;
+using namespace seabreeze::api;
+using namespace std;
+
+#ifdef _WINDOWS
+#pragma warning (disable: 4101) // unreferenced local variable
+#endif
+
+PixelBinningFactorFeature::PixelBinningFactorFeature(vector<ProtocolHelper *> helpers) {
+
+    vector<ProtocolHelper *>::iterator iter;
+    for(iter = helpers.begin(); iter != helpers.end(); iter++) {
+        this->protocols.push_back(*iter);
+    }
+}
+
+PixelBinningFactorFeature::~PixelBinningFactorFeature() {
+
+}
+
+int PixelBinningFactorFeature::readPixelBinningFactor(const Protocol &protocol,
+                const Bus &bus) throw (FeatureException) {
+
+    PixelBinningFactorProtocolInterface *binning = NULL;
+    int result = 0;
+    ProtocolHelper *proto = NULL;
+
+    try {
+        proto = lookupProtocolImpl(protocol);
+        binning = static_cast<PixelBinningFactorProtocolInterface *>(proto);
+    } catch (FeatureProtocolNotFoundException &e) {
+        string error(
+                "Could not find matching protocol implementation to get pixel binning factor.");
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureProtocolNotFoundException(error);
+    }
+
+    try {
+        result = binning->readPixelBinningFactor(bus);
+    } catch (ProtocolException &pe) {
+        string error("Caught protocol exception: ");
+        error += pe.what();
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureControlException(error);
+    }
+
+    return result;
+}
+
+void PixelBinningFactorFeature::writePixelBinningFactor(const Protocol &protocol,
+                const Bus &bus, const int p) throw (FeatureException) {
+
+    PixelBinningFactorProtocolInterface *binning = NULL;
+    ProtocolHelper *proto = NULL;
+
+    try {
+        proto = lookupProtocolImpl(protocol);
+        binning = static_cast<PixelBinningFactorProtocolInterface *>(proto);
+    } catch (FeatureProtocolNotFoundException &e) {
+        string error(
+                "Could not find matching protocol implementation to write pixel binning factor.");
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureProtocolNotFoundException(error);
+    }
+
+    try {
+        binning->writePixelBinningFactor(bus, p);
+    } catch (ProtocolException &pe) {
+        string error("Caught protocol exception: ");
+        error += pe.what();
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureControlException(error);
+    }
+}
+
+int PixelBinningFactorFeature::readMaximumPixelBinningfactor(const Protocol &protocol,
+        const Bus &bus) throw (FeatureException) {
+
+    PixelBinningFactorProtocolInterface *binning = NULL;
+    int result = 0;
+    ProtocolHelper *proto = NULL;
+
+    try {
+        proto = lookupProtocolImpl(protocol);
+        binning = static_cast<PixelBinningFactorProtocolInterface *>(proto);
+    } catch (FeatureProtocolNotFoundException &e) {
+        string error(
+                "Could not find matching protocol implementation to get pixel maximum binning factor.");
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureProtocolNotFoundException(error);
+    }
+
+    try {
+        result = binning->readMaximumPixelBinningfactor(bus);
+    } catch (ProtocolException &pe) {
+        string error("Caught protocol exception: ");
+        error += pe.what();
+        /* FIXME: previous exception should probably be bundled up into the new exception */
+        throw FeatureControlException(error);
+    }
+
+    return result;
+}
+
+FeatureFamily PixelBinningFactorFeature::getFeatureFamily() {
+    FeatureFamilies families;
+
+    return families.SPECTROMETER;
+}

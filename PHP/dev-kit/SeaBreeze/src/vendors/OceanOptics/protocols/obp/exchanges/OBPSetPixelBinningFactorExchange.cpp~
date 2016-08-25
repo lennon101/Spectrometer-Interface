@@ -1,0 +1,32 @@
+/***************************************************//**
+ * @file    OBPSetPixelBinningFactorExchange.cpp
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPSetPixelBinningFactorExchange.h"
+#include "vendors/OceanOptics/protocols/obp/hints/OBPControlHint.h"
+#include "vendors/OceanOptics/protocols/obp/constants/OBPMessageTypes.h"
+
+using namespace seabreeze;
+using namespace seabreeze::oceanBinaryProtocol;
+
+OBPSetPixelBinningFactorExchange::OBPSetPixelBinningFactorExchange() {
+    this->hints->push_back(new OBPControlHint());
+    this->messageType = OBPMessageTypes::OBP_SET_BINNING_FACTOR;
+    payload.resize(1);
+}
+
+OBPSetPixelBinningFactorExchange::~OBPSetPixelBinningFactorExchange() {
+}
+
+void OBPSetPixelBinningFactorExchange::setBinningFactor(const int b) {
+    payload[0] = b & 0x00FF;
+}

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:		ocean-daemon
+# Required-Start:	$remote_fs
+# Required-Stop:	$remote_fs
+# Should-Start:		$network
+# Should-Stop:
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Advanced IEEE 802.11 management daemon
+# Description:		Userspace IEEE 802.11 AP and IEEE 802.1X/WPA/WPA2/EAP
+#			Authenticator
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON_SBIN=/usr/sbin/ocean-daemon
+DAEMON_DEFS=
+DAEMON_CONF=
+NAME=hostapd
+DESC="Ocean Optics spectrometer control"
+PIDFILE=/var/run/ocean-daemon.pid
+
+DAEMON_OPTS=
+
+case "$1" in
+  start)
+	start-stop-daemon --start --oknodo --quiet --exec "$DAEMON_SBIN" \
+		--pidfile "$PIDFILE" -- $DAEMON_OPTS >/dev/null
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload|reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

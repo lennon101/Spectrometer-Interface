@@ -1,0 +1,29 @@
+/***************************************************//**
+ * @file    OBPGetMaximumPixelBinningFactorExchange.h
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef OBPGetMaximumPixelBinningFactorExchange_H
+#define OBPGetMaximumPixelBinningFactorExchange_H
+
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPQuery.h"
+
+namespace seabreeze {
+    namespace oceanBinaryProtocol {
+        class OBPGetMaximumPixelBinningFactorExchange : public OBPQuery {
+        public:
+            OBPGetMaximumPixelBinningFactorExchange();
+            virtual ~OBPGetMaximumPixelBinningFactorExchange();
+        };
+    } /* end namespace */
+} /* end namespace */
+
+#endif /* OBPGetMaximumPixelBinningFactorExchange_H */
+

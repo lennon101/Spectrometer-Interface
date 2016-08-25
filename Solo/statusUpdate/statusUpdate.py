@@ -26,7 +26,7 @@ target = sys.argv[1] if len(sys.argv) >= 2 else 'udpin:0.0.0.0:14550'
 print 'Connecting to ' + target + '...'
 vehicle = connect(target, wait_ready=True)
 
-
+'''
 #set up a mavlink listener for the system time clcok (taken from GPS)
 @vehicle.on_message('SYSTEM_TIME')
 def listener(self, name, message):
@@ -34,11 +34,25 @@ def listener(self, name, message):
 		#truncate time to convert from usec to seconds
 		epochTime = trunc(message.time_unix_usec/1000000)
 		print "DTG: " , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
+'''
 
 #set up a mavlink listener for the Camera Trigger
 @vehicle.on_message('CAMERA_FEEDBACK')
 def listener(self, name, message):
-	print 'mavlink msg: %s' % message
+	print '\nCamera Feedback msg received \n'
+
+	epochTime = trunc(message.time_usec/1000000)
+	print "DTG: " , time.strftime("%d-%m-%Y %H:%M:%S", time.gmtime(epochTime))
+	#print 'time msg: %.0f \n' % message.time_usec
+	print 'img indx: %.0f \n' % message.img_idx
+
+	print 'lat: %+.0f \n' % message.lat
+	print 'long: %+.0f \n' % message.lng
+	print 'alt relative: %.2f \n' % message.alt_rel
+	print 'roll: %+.11f \n' % message.roll
+	print 'pitch: %+.11f \n' % message.pitch
+	print 'yaw: %+.11f \n' % message.alt_rel
+
 	#print "cam triggered @: %s \n" % message.time_usec #time stamp
 	#print "cam sequence num = %s \n" % message.cam_idx #sequence number
 

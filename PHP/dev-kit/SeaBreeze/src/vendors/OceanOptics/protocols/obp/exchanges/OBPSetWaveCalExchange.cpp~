@@ -1,0 +1,42 @@
+/***************************************************//**
+ * @file    OBPSetWaveCalExchange.cpp
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include <string.h>
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPSetWaveCalExchange.h"
+#include "vendors/OceanOptics/protocols/obp/hints/OBPControlHint.h"
+#include "vendors/OceanOptics/protocols/obp/constants/OBPMessageTypes.h"
+
+using namespace seabreeze;
+using namespace seabreeze::oceanBinaryProtocol;
+
+OBPSetWaveCalExchange::OBPSetWaveCalExchange() {
+
+    this->hints->push_back(new OBPControlHint());
+
+    this->messageType = OBPMessageTypes::OBP_SET_WL_COEFF;
+
+    this->payload.resize(1 + sizeof(float));
+}
+
+OBPSetWaveCalExchange::~OBPSetWaveCalExchange() {
+
+}
+
+void OBPSetWaveCalExchange::setCoefficient(unsigned int index, const float coeff) {
+    unsigned int *fptr = (unsigned int *) &coeff;
+    payload[0] = index & 0x00FF;
+    payload[1] = (*fptr) & 0x00FF;
+    payload[2] = ((*fptr) >> 8) & 0x00FF;
+    payload[3] = ((*fptr) >> 16) & 0x00FF;
+    payload[4] = ((*fptr) >> 24) & 0x00FF;
+}

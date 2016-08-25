@@ -1,0 +1,27 @@
+/***************************************************//**
+ * @file    OBPGetMaximumPixelBinningFactorExchange.cpp
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPGetMaximumPixelBinningFactorExchange.h"
+#include "vendors/OceanOptics/protocols/obp/hints/OBPControlHint.h"
+#include "vendors/OceanOptics/protocols/obp/constants/OBPMessageTypes.h"
+
+using namespace seabreeze;
+using namespace seabreeze::oceanBinaryProtocol;
+
+OBPGetMaximumPixelBinningFactorExchange::OBPGetMaximumPixelBinningFactorExchange() {
+    this->hints->push_back(new OBPControlHint());
+    this->messageType = OBPMessageTypes::OBP_GET_MAX_BINNING_FACTOR;
+}
+
+OBPGetMaximumPixelBinningFactorExchange::~OBPGetMaximumPixelBinningFactorExchange() {
+}

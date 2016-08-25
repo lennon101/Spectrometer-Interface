@@ -1,0 +1,111 @@
+body {
+font-family: sans-serif;
+}
+ul
+{
+list-style-type:none;
+margin:0;
+padding:0;
+overflow:hidden;
+}
+li
+{
+float:left;
+}
+#menulink:link
+{
+display:block;
+width:250px;
+font-family: sans-serif;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#005aab;
+text-align:center;
+padding:4px;
+text-decoration:none;
+border:2px solid grey;
+}
+#menulink:visited
+{
+display:block;
+width:250px;
+font-family: sans-serif;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#005aab;
+text-align:center;
+padding:4px;
+text-decoration:none;
+border:2px solid grey;
+}
+#menulink:hover
+{
+background-color:#0070d5;
+}
+#menulink:active
+{
+background-color:#0070d5;
+}
+#menulinkactive:link
+{
+display:block;
+width:250px;
+font-family: sans-serif;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#005aab;
+text-align:center;
+padding:4px;
+text-decoration:none;
+border:2px solid red;
+}
+#menulinkactive:visited
+{
+display:block;
+width:250px;
+font-family: sans-serif;
+font-weight:bold;
+color:#FFFFFF;
+background-color:#005aab;
+text-align:center;
+padding:4px;
+text-decoration:none;
+border:2px solid red;
+}
+#menulinkactive:hover
+{
+background-color:#0070d5;
+}
+#menulinkactive:active
+{
+background-color:#0070d5;
+}
+table {
+border: 1px solid black;
+font-family: sans-serif;
+}
+.config-result {
+font-family: sans-serif;
+}
+.logo
+{
+float: left;
+}
+.clear {
+clear:both;
+margin-bottom:5px;
+}
+#set
+{
+color:#FFFFFF;
+background-color:#005aab;
+}
+#set:hover
+{
+background-color:#0070d5;
+}
+#set:disabled
+{
+background-color:#6da2c9;
+color:#6d6d6d;
+}

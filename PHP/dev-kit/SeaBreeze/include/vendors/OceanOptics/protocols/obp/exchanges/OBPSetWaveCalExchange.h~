@@ -1,0 +1,31 @@
+/***************************************************//**
+ * @file    OBPSetWaveCalExchange.h
+ * @date    April 2014
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2014 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef OBPSetWaveCalExchange_H
+#define OBPSetWaveCalExchange_H
+
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPCommand.h"
+
+namespace seabreeze {
+    namespace oceanBinaryProtocol {
+        class OBPSetWaveCalExchange : public OBPCommand {
+        public:
+            OBPSetWaveCalExchange();
+            virtual ~OBPSetWaveCalExchange();
+
+            void setCoefficient(unsigned int index, const float coeff);
+        };
+    } /* end namespace */
+} /* end namespace */
+
+#endif /* OBPSetWaveCalExchange_H */
+

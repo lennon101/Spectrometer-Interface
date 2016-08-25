@@ -1,0 +1,47 @@
+/***************************************************//**
+ * @file    PixelBinningFactorFeature.h
+ * @date    February 2011
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef PixelBinningFactorFeature_H
+#define PixelBinningFactorFeature_H
+
+#include "vendors/OceanOptics/features/spectrometer/PixelBinningFactorFeatureInterface.h"
+#include "common/protocols/Protocol.h"
+#include "common/features/Feature.h"
+#include "common/buses/Bus.h"
+#include "common/exceptions/FeatureException.h"
+
+namespace seabreeze {
+
+    class PixelBinningFactorFeature : public Feature, public PixelBinningFactorFeatureInterface {
+    public:
+        PixelBinningFactorFeature(std::vector<ProtocolHelper *> helpers);
+        virtual ~PixelBinningFactorFeature();
+
+        virtual int readPixelBinningFactor(const Protocol &protocol,
+                const Bus &bus) throw (FeatureException);
+
+        virtual void writePixelBinningFactor(const Protocol &protocol,
+                const Bus &bus, const int p) throw (FeatureException);
+
+        virtual int readMaximumPixelBinningfactor(const Protocol &protocol,
+                const Bus &bus) throw (FeatureException);
+
+        /* Overriding from Feature */
+        virtual FeatureFamily getFeatureFamily();
+
+    protected:
+        unsigned int numberOfPixels;
+    };
+
+}
+
+#endif /* PixelBinningFactorFeature_H */

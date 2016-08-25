@@ -1,0 +1,141 @@
+______________________________________________________________________________
+[ReleaseNotes-2.1.4.txt]
+
+Release Date: 2013-05-21 (Version 2.1.4)
+
+* Fixed STS minimum integration time (changed from 1ms to 10usec) [#2653]
+* Fixed Ventana minimum integration time (changed to 22ms)
+* Fixed a QE65000 wavelength calibration error [#2916]
+* Added laser controls for Ventana 785L [#3045]
+* Reorganized protocols into subdirectories
+* Added scripts/update-visual-studio-projects [#3069]
+* Applied requested customer updates to docs and Makefiles [#3069]
+* Fixed support for multiple spectrometers of the same type [#3073]
+* Standardized all Visual Studio builds on Unicode  [#3073]
+* Added filters to VS2010 project [#3073]
+
+______________________________________________________________________________
+[ReleaseNotes-2.1.3.txt]
+
+Release Date: 2013-03-22 (Version 2.1.3)
+
+This release adds two small updates:
+
+* Ready-made solution/project files for Visual Studio 2005 and 2012
+* Support for Ventana TEC
+
+______________________________________________________________________________
+[ReleaseNotes-2.1.2.txt]
+
+Release Date: 2013-01-22 (Version 2.1.2)
+
+This release adds several significant enhancements and fixes, including:
+
+* Added continuous strobe for STS [#2847]
+* Added support for Apex and Ventana [#2842] 
+* Added seabreeze_get_usb_descriptor_string() to allow access to FX2 
+  version [#2806]
+* Fixed Feature initializers (restores gain-correction on USB2000+ and
+  other spectrometers) [#2835]
+
+Note that the final Ventana firmware was not available at release, so 
+SeaBreeze support may require an additional release once that product
+is in formal production.
+
+______________________________________________________________________________
+[ReleaseNotes-2.1.1.txt]
+
+Release Date: 2012-12-20 (Version 2.1.1)
+
+This release is hoped to fix a handful of 32-bit vs 64-bit issues which were 
+reported to cause issues on some 64-bit customer platforms, yet were never 
+fully reproduced by Ocean Optics testing.
+
+______________________________________________________________________________
+[ReleaseNotes-2.1.0.txt]
+
+Release Date: 2012-10-29 (Version 2.1.0)
+
+* Resolved 64-bit issues (builds, installs, and runs in Win32 on Win7-64)
+* Added seabreeze_set_continuous_strobe_period_microseconds()
+* Added seabreeze_write_usb() and seabreeze_read_usb()
+* Added seabreeze_write_eeprom_slot()
+* Added seabreeze_set_verbose() to simplify external testing
+* Added seabreeze_get_api_version_string() 
+* Renamed MayaPro2000 to Maya2000Pro
+* Purged unsupported legacy targets
+
+______________________________________________________________________________
+[SeaBreeze 2.0 Release Notes]
+
+This is a significant release of SeaBreeze in that it merges the Ocean Optics
+"core" version of the SeaBreeze driver (used for internal projects) with the
+"OEM" version (sometimes called SeaBreezeOEM), which was used for external
+customer projects.
+
+By merging the two forks back into a unified whole, this ensures that:
+
+1. External OEM customers will receive the "latest and greatest" updates which
+Ocean Optics is regularly adding for its own use; and
+
+2. Ocean Optics will be "eating its own dog food" as it were, continually
+testing and utilizing the same software which we provide to our OEM customers.
+
+Both consequences are anticipated to benefit OEM customers over time, by
+improving both timeliness and robustness of future releases.
+
+Key changes in SeaBreeze 2.0 for existing internal (non-OEM users) include:
+
+- build process has been streamlined and simplified for POSIX architectures
+(Linux and MacOS)
+
+- automated Doxygen documentation has been added (see doc/)
+
+- a working Visual Studio solution has been added (see os-support/windows)
+
+- Windows device drivers have been added to the distribution
+
+- support for easier memory profiling has been added (see
+include/common/globals.h)
+
+- support has been added to completely destroy the SeaBreezeWrapper and
+DeviceFactory singletons, which had been found to generate spurious memory
+warnings under Visual Studio
+
+- a rudimentary library of sample code has been started to demonstrate how to
+implement basic spectral processing functions in application code, add timeouts
+to potentially blocking seabreeze functions (like getSpectrum), etc (see
+sample-code/)
+
+Key changes in SeaBreeze 2.0 for existing OEM users include:
+
+- support for RS-232 and ethernet buses has been added
+
+- support for the Torus has been added
+
+- support for the Jaz has been added
+
+- support for stray light coefficients has been added
+
+- an entirely new SeaBreezeAPI has been added, which will allow support for many
+powerful new capabilities in the Jaz, STS, QE65kPro, and other advanced
+spectrometers (see include/api/seabreezeapi)
+
+- previously supported spectral processing functions have been removed from the
+core driver, including multi-scan averaging, boxcar filters, non-linearity
+correction and electrical dark correction.  All functions can still be
+implemented in application code, and we are in the process of documentating how
+each of these and other functions can be simply achieved (see sample-code/)
+
+Additional changes will be new for all users:
+
+- Linux udev rules have been updated to work on the latest common distributions
+
+- A C# GUI demonstration application has been added under
+sample-code/CSharpDemo.  This demonstrates how to perform a number of
+commonly-requested basic functions, such as threaded background spectral
+acquisition, real-time graphing using .NET 4.0 DataVisualization, absolute
+irradiance calculation, how to build Windows installers, etc.
+
+- updated Windows device drivers have been provided for the HR2000+,
+Maya2000Pro, NIRQuest256, NIRQuest512, and USB2000+

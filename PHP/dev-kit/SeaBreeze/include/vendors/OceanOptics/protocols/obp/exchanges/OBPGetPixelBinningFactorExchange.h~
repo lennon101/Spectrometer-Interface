@@ -1,0 +1,29 @@
+/***************************************************//**
+ * @file    OBPGetPixelBinningFactorExchange.h
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef OBPGetPixelBinningFactorExchange_H
+#define OBPGetPixelBinningFactorExchange_H
+
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPQuery.h"
+
+namespace seabreeze {
+    namespace oceanBinaryProtocol {
+        class OBPGetPixelBinningFactorExchange : public OBPQuery {
+        public:
+            OBPGetPixelBinningFactorExchange();
+            virtual ~OBPGetPixelBinningFactorExchange();
+        };
+    } /* end namespace */
+} /* end namespace */
+
+#endif /* OBPGetPixelBinningFactorExchange_H */
+

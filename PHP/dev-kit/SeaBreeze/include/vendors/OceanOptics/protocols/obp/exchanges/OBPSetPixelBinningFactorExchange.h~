@@ -1,0 +1,30 @@
+/***************************************************//**
+ * @file    OBPSetPixelBinningFactorExchange.h
+ * @date    February 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#ifndef OBPSetPixelBinningFactorExchange_H
+#define OBPSetPixelBinningFactorExchange_H
+
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPCommand.h"
+
+namespace seabreeze {
+  namespace oceanBinaryProtocol {
+    class OBPSetPixelBinningFactorExchange : public OBPCommand {
+    public:
+        OBPSetPixelBinningFactorExchange();
+        virtual ~OBPSetPixelBinningFactorExchange();
+        void setBinningFactor(int b);
+    };
+  } /* end namespace */
+} /* end namespace */
+
+#endif /* OBPSetPixelBinningFactorExchange_H */
+

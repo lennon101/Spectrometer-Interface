@@ -1,0 +1,28 @@
+/***************************************************//**
+ * @file    OOIUSBVentanaTransferHelper.cpp
+ * @date    January 2013
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2013 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/buses/usb/OOIUSBVentanaTransferHelper.h"
+
+using namespace seabreeze;
+
+OOIUSBVentanaTransferHelper::OOIUSBVentanaTransferHelper(USB *usb,
+        const OOIUSBVentanaEndpointMap &map) : USBTransferHelper(usb) {
+
+    this->sendEndpoint = map.getPrimaryOutEndpoint();
+    this->receiveEndpoint = map.getPrimaryInEndpoint();
+}
+
+OOIUSBVentanaTransferHelper::~OOIUSBVentanaTransferHelper() {
+
+}
+

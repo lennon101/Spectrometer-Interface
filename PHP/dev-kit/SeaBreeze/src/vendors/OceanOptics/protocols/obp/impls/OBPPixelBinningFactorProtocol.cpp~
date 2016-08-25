@@ -1,0 +1,99 @@
+/***************************************************//**
+ * @file    OBPPixelBinningFactorProtocol.cpp
+ * @date    January 2012
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/protocols/obp/impls/OBPPixelBinningFactorProtocol.h"
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPGetPixelBinningFactorExchange.h"
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPGetMaximumPixelBinningFactorExchange.h"
+#include "vendors/OceanOptics/protocols/obp/exchanges/OBPSetPixelBinningFactorExchange.h"
+#include "vendors/OceanOptics/protocols/obp/impls/OceanBinaryProtocol.h"
+#include "common/exceptions/ProtocolBusMismatchException.h"
+
+using namespace seabreeze;
+using namespace seabreeze::oceanBinaryProtocol;
+using namespace std;
+
+OBPPixelBinningFactorProtocol::OBPPixelBinningFactorProtocol()
+        : PixelBinningFactorProtocolInterface(new OceanBinaryProtocol()) {
+
+}
+
+OBPPixelBinningFactorProtocol::~OBPPixelBinningFactorProtocol() {
+
+}
+
+int OBPPixelBinningFactorProtocol::readPixelBinningFactor(const Bus &bus)
+                throw (ProtocolException) {
+    vector<byte> *result = NULL;
+    int factor = 0;
+
+    OBPGetPixelBinningFactorExchange xchange;
+
+    TransferHelper *helper = bus.getHelper(xchange.getHints());
+    if(NULL == helper) {
+        string error("Failed to find a helper to bridge given protocol and bus.");
+        throw ProtocolBusMismatchException(error);
+    }
+
+    result = xchange.queryDevice(helper);
+    if (NULL == result) {
+        string error("Expected Transfer::transfer to produce a non-null result "
+            "containing pixel binning factor.");
+        throw ProtocolException(error);
+    }
+
+    factor = (*result)[0];
+
+    return factor;
+}
+
+void OBPPixelBinningFactorProtocol::writePixelBinningFactor(const Bus &bus, const int b)
+                throw (ProtocolException) {
+
+    OBPSetPixelBinningFactorExchange xchange;
+
+    TransferHelper *helper = bus.getHelper(xchange.getHints());
+    if(NULL == helper) {
+        string error("Failed to find a helper to bridge given protocol and bus.");
+        throw ProtocolBusMismatchException(error);
+    }
+
+    xchange.setBinningFactor(b);
+    xchange.sendCommandToDevice(helper);
+}
+
+int OBPPixelBinningFactorProtocol::readMaximumPixelBinningfactor(const Bus &bus)
+    throw (ProtocolException) {
+
+    vector<byte> *result = NULL;
+    int factor = 0;
+
+    OBPGetMaximumPixelBinningFactorExchange xchange;
+
+    TransferHelper *helper = bus.getHelper(xchange.getHints());
+    if(NULL == helper) {
+        string error("Failed to find a helper to bridge given protocol and bus.");
+        throw ProtocolBusMismatchException(error);
+    }
+
+    result = xchange.queryDevice(helper);
+    if (NULL == result) {
+        string error("Expected Transfer::transfer to produce a non-null result "
+            "containing maximum pixel binning.");
+        throw ProtocolException(error);
+    }
+
+    factor = (*result)[0];
+
+    return factor;
+}
+

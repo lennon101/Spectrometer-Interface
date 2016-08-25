@@ -1,0 +1,28 @@
+/***************************************************//**
+ * @file    OOIUSBSTSTransferHelper.cpp
+ * @date    January 2011
+ * @author  Ocean Optics, Inc.
+ *
+ * Copyright (C) 2012 Ocean Optics, Inc.
+ * All rights reserved.
+ *
+ * Notes:
+ *
+ *******************************************************/
+
+#include "common/globals.h"
+#include "vendors/OceanOptics/buses/usb/OOIUSBSTSTransferHelper.h"
+
+using namespace seabreeze;
+
+OOIUSBSTSTransferHelper::OOIUSBSTSTransferHelper(USB *usb,
+        const OOIUSBSTSEndpointMap &map) : USBTransferHelper(usb) {
+
+    this->sendEndpoint = map.getPrimaryOutEndpoint();
+    this->receiveEndpoint = map.getPrimaryInEndpoint();
+}
+
+OOIUSBSTSTransferHelper::~OOIUSBSTSTransferHelper() {
+
+}
+
