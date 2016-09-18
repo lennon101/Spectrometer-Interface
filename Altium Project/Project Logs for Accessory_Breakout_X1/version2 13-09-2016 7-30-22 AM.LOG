@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=GND Pin=USB Type A-4
+Added Pin To Net: NetName=USB_GND Pin=USB Type A-4
+Added Room: Name=Accessory_Breakout_X1

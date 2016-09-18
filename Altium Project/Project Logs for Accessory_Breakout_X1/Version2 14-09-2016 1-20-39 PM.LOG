@@ -1,0 +1,6 @@
+Added Component: Designator=USB Type A(USB 2.0 SMD)
+Added Pin To Net: NetName=USB_5V Pin=USB Type A-1
+Added Pin To Net: NetName=D_N Pin=USB Type A-2
+Added Pin To Net: NetName=D_P Pin=USB Type A-3
+Added Pin To Net: NetName=USB_GND Pin=USB Type A-4
+Added Member To Class: ClassName=Accessory_Breakout_X1 Member=Component USB Type A Host
