@@ -75,8 +75,8 @@
  	double roll;
  	double pitch;
  	double yaw;
- 	double lat;
- 	double lon; 
+ 	unsigned lat;
+ 	unsigned lon; 
  };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -85,24 +85,22 @@
 
  int sampleNum;
  char* filename;
- unsigned integrationTime;
 
  struct Dtg dtg;
  struct FlightData flightData; 
 
- int numReqArguments = 16; //including the name of the executable
+ int numReqArguments = 15; //including the name of the executable
  unsigned scans_to_average = 3;
 
  void usage() {
- 	puts("data-collection (C) 2014, Ocean Optics Inc\n"
+ 	puts("data-collection 2016, Dane Lennon\n"
  		"\n"
  		"Usage:\n"
- 		"    $ ./data-collection integration sampleNum yr mm dd hr mm ss alt roll pitch yaw lat lon\n"
+ 		"    $ ./data-collection sampleNum yr mm dd hr mm ss alt roll pitch yaw lat lon\n"
  		"                        filename\n"
  		"\n"
  		"Where:\n"
  		"\n"
-        "--integration     the time to have the shuter open during each sampling (in millisceconcs)"
  		"--sampleNum       An index declaring the sample number\n"
  		"					if 0 then a header file is setup, else if 1 or more, samples are saved\n"
  		"--dtg             the date-time-group which will appended to the header of the csv\n"
@@ -116,32 +114,30 @@
  void parseArgs(int argc, char **argv){
     // iterate over cmd-line arguments
  	if (argc == numReqArguments){
-        integrationTime = atoi(argv[1]);
- 		sampleNum = atoi(argv[2]);
+ 		sampleNum = atoi(argv[1]);
 
- 		dtg.year = atoi(argv[3]);
- 		dtg.month = atoi(argv[4]);
- 		dtg.day = atoi(argv[5]);
- 		dtg.hour = atoi(argv[6]);
- 		dtg.minutes = atoi(argv[7]);
- 		dtg.seconds = atoi(argv[8]);
+ 		dtg.year = atoi(argv[2]);
+ 		dtg.month = atoi(argv[3]);
+ 		dtg.day = atoi(argv[4]);
+ 		dtg.hour = atoi(argv[5]);
+ 		dtg.minutes = atoi(argv[6]);
+ 		dtg.seconds = atoi(argv[7]);
 
- 		flightData.alt = atof(argv[9]);
- 		flightData.roll = atof(argv[10]);
- 		flightData.pitch = atof(argv[11]);
- 		flightData.yaw = atof(argv[12]);
- 		flightData.lat = atof(argv[13]);
- 		flightData.lon = atof(argv[14]);
+ 		flightData.alt = atof(argv[8]);
+ 		flightData.roll = atof(argv[9]);
+ 		flightData.pitch = atof(argv[10]);
+ 		flightData.yaw = atof(argv[11]);
+ 		flightData.lat = atoi(argv[12]);
+ 		flightData.lon = atoi(argv[13]);
 
-
- 		filename = argv[15];
+ 		filename = argv[14];
 
  	}else if (argc > numReqArguments){
  		printf("Too many arguments supplied");
  		usage();
  	}else if (argc == 3){ 
         printf("simulating vehicle data");
-        sampleNum = atoi(argv[1]);;
+        sampleNum = atoi(argv[1]);    
 
         dtg.year = 2016;
         dtg.month = 9;
@@ -168,7 +164,6 @@
  int main(int argc, char *argv[]) {
  	int flag;
  	int error;
- 	char type[16];
  	int device_count = 0;
  	int i;
 
@@ -199,7 +194,7 @@
  	for(i = 0; i < SEABREEZE_MAX_DEVICES; i++) {
  		printf("\nOpening spectrometer %d.\n", i);
  		flag = seabreeze_open_spectrometer(i, &error);
- 		printf("...Result is (%d) [%s]\n", flag, get_error_string(error));
+ 		//printf("...Result is (%d) [%s]\n", flag, get_error_string(error));
  		if(0 == flag) {
  			device_count++;
  		} else {
@@ -207,39 +202,25 @@
  		}
  	}
 
- 	for(i = 0; i < device_count; i++) {
- 		printf("\nGetting device %d name.\n", i);
- 		seabreeze_get_model(i, &error, type, sizeof(type));
- 		printf("...Result is (%s) [%s]\n", type, get_error_string(error));
- 	}
-
  	printf("Number of devices found is: %d\n", device_count);
 
  	for(i = 0; i < device_count; i++) {
- 		printf("\nSetting device %d integration time to %dms.\n", i,integrationTime);
- 		seabreeze_set_integration_time_microsec(i, &error, integrationTime * 1000);
- 		//printf("...Result is [%s]\n", get_error_string(error));
- 	}
-
- 	for(i = 0; i < device_count; i++) {
- 		printf("\n\nBegin sampling using device: %d\n", i);
-
  		if (sampleNum == 0){
+            printf("\n\nset the header for device: %d\n", i);
  			get_wavelengths(i); //create the header file
  		}else if (sampleNum>=1){
+            printf("\n\nBegin sampling using device: %d\n", i);
  			get_spectrum(i);
  		}
  	}
  	
- 	//get_raw_spectrum_test(i);
-
  	////////////////////////////////////////////////////////////////////////////////
  	/////close the spectrometers
  	///////////////////////////////////////////////////////////////////////////////
  	for(i = 0; i < device_count; i++) {
  		printf("\nClosing spectrometer %d.\n", i);
  		flag = seabreeze_close_spectrometer(i, &error);
- 		//printf("...Result is (%d) [%s]\n", flag, get_error_string(error));
+ 		printf("...Result is (%d) [%s]\n", flag, get_error_string(error));
  	}
 
  	seabreeze_shutdown();
@@ -297,19 +278,26 @@
             average[i] /= scans_to_average;
 
         ////////////////////////////////////////////////////////////////////////////
-        // avarage the spectrum
+        // add spectrum to csv file
         ////////////////////////////////////////////////////////////////////////////
- 		FILE *f = fopen(filename, "a");
+
+        printf("The name of the file to append to is %s\n", filename);
+        const char* filename_extension = ".csv";
+        char* filename_with_extension;
+        filename_with_extension = malloc(strlen(filename)+4);
+        strcpy(filename_with_extension,filename);
+        strcat(filename_with_extension, filename_extension);
+ 		FILE *f = fopen(filename_with_extension, "a");
  		if (f != NULL){
 
- 			fprintf(f, "%u,%s,%u-%u-%u,%u:%u:%u,%.11f,%.11f,%.11f,%.11f,%.5f,%.5f,", sampleNum, serial_number, dtg.year, dtg.month, dtg.day, dtg.hour, dtg.minutes, dtg.seconds, flightData.alt, flightData.roll, flightData.pitch, flightData.yaw, flightData.lat, flightData.lon);
+ 			fprintf(f, "%u,%s,%u-%u-%u,%u:%u:%u,%.11f,%.11f,%.11f,%.11f,%u,%u,", sampleNum, serial_number, dtg.year, dtg.month, dtg.day, dtg.hour, dtg.minutes, dtg.seconds, flightData.alt, flightData.roll, flightData.pitch, flightData.yaw, flightData.lat, flightData.lon);
  			for (unsigned pixel = 0; pixel < spec_length; pixel++)
  				fprintf(f, "%.2lf,", average[pixel]);
  			fprintf(f, "\n");
  			fclose(f);
  		}
  		else{
- 			printf("ERROR: can't write %s\n", filename);
+ 			printf("ERROR: can't write %s\n", filename); 
  			exit(1);
  		}
 
@@ -335,10 +323,15 @@
  		printf("...Result is (%d) [%s]\n", flag, get_error_string(error));
 
         FILE *f;
+        const char* filename_extension = ".csv";
+        char* filename_with_extension;
+        filename_with_extension = (char *)malloc(strlen(filename)+5);
+        strcpy(filename_with_extension,filename);
+        strcat(filename_with_extension, filename_extension);
         if (index == 0){
-            f = fopen(filename, "w");
+            f = fopen(filename_with_extension, "w");
         }else {
-            f = fopen(filename, "a");
+            f = fopen(filename_with_extension, "a");
         }
         
  		if (f != NULL){
@@ -353,9 +346,10 @@
  			printf("ERROR: can't write %s\n", "test");
  			exit(1);
  		}
-
  		free(wls);
+        free(filename_with_extension);
  	}
  }
 
 
+ 
